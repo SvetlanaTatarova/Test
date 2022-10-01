@@ -1,0 +1,13 @@
+﻿@model Test.ViewModels.TeacherViewModel
+<title>@ViewBag.Title</title>
+
+<form asp-action="CreateTeacher" asp-controller="Teacher" method="post" enctype="multipart/form-data">
+    <div class="mt-5 md-2">
+        <h1><p>Вы не можете удалить преподавателя!</p> Он куратор группы.</h1>
+    </div>
+    <p></p>
+    <p></p>
+    <a class="btn btn-dark" style="font-size: 20px; opacity: 0.6;" href="/Home/Index" title="Группы">Список групп</a>
+    <a class="btn btn-dark" style="font-size: 20px; opacity: 0.6;" href="/Home/TeacherList" title="Студенты">Список преподавателей</a>
+    <a class="btn btn-dark" style="font-size: 20px; opacity: 0.6;" href="/Home/StudentList" title="Студенты">Список студентов</a>
+</form>

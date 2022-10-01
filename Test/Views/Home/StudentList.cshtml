@@ -1,0 +1,45 @@
+﻿@model Test.ViewModels.HomeViewModel
+
+<div class="mt-5 md-2">
+    <center><h1>Обучающиеся студенты</h1></center>
+</div>
+
+<div class="col-12 mt-4">
+    <p style="font-size:30px">
+        <strong><em>Добавить студента: </em></strong>
+        <a class="btn btn-outline-primary btn-lg" href="/Student/CreateStudent">Добавить</a>
+    </p>
+</div>
+
+<div class="row">
+    @{
+        foreach (var student in Model.GetAllStudents)
+        {
+        <div class=" col-6 mt-4">
+            @{
+                if (student.Img != null)
+                {<img style="float:left; margin: 4px 7px 2px 4px;" src="@student.Img" alt="@student.Name" width="150" height="200" />}
+                else
+                {<img style="float:left; margin: 4px 7px 2px 4px;" src="/img/avatar.png" alt="@student.Name" width="150" height="200" />}
+
+                <p style="font-size:25px"><strong>@student.Name</strong></p>
+
+                foreach (var group in Model.GetAllGroups)
+                    if (student.GroupId == group.Id)
+                    {<p style="font-size:22px">Номер группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>}
+
+                if(student.PhoneNumber != null)
+                {<p style="font-size:22px">Номер телефона: @student.PhoneNumber</p>}
+                else {<p style="font-size:22px">Номер телефона: - </p>}
+            
+                }
+            <a class="btn btn-outline-success btn-lg" asp-action="EditStudent" asp-controller="Student" asp-route-id="@student.Id">Изменить</a>
+            <a class="btn btn-outline-danger btn-lg" asp-action="DeleteStudent" asp-controller="Student" asp-route-id="@student.Id">Удалить</a>
+            
+        </div>
+        }
+    }
+</div>
+
+
+

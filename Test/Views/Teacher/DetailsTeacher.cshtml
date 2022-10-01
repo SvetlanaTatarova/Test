@@ -1,0 +1,50 @@
+﻿@model Test.ViewModels.TeacherViewModel
+<title>@ViewBag.Title</title>
+
+<div class="mt-5 md-2">
+    <center><h1>Информация о преподавателе</h1></center>
+</div>
+
+<div class="row">
+
+    <div class="col-lg-6 mt-4">
+        @{
+            if (Model.Img != null)
+            {<img style="float: left; vertical-align: top; margin: 4px 7px 2px 4px;" src="@Model.Img" alt="@Model.Name" width="150" height="200" />}
+            else
+            {<img style="float:left; margin: 4px 7px 2px 4px;" src="/img/avatar.png" alt="@Model.Name" width="150" height="200" />}
+            <p style="font-size:25px"><strong>@Model.Name</strong></p>
+
+            <p style="font-size:22px">Должность: @Model.Position</p>
+
+            if (Model.PhoneNumber != null)
+            {<p style="font-size:22px">Номер телефона: @Model.PhoneNumber</p>}
+            else
+            {<p style="font-size:22px">Номер телефона: - </p>}
+
+
+            foreach (var group in Model.allGroups)
+            {
+                if (Model.Id == group.CuratorId)
+                {
+                    <p align="justify" style="font-size:22px">Куратор группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>
+                }
+            }
+        }
+        
+        <a class="btn btn-outline-success btn-lg" asp-action="EditTeacher" asp-controller="Teacher" asp-route-id="@Model.Id">Изменить</a>
+        <a class="btn btn-outline-danger btn-lg" asp-action="DeleteTeacher" asp-controller="Teacher" asp-route-id="@Model.Id" title="ВНИМАНИЕ!!! Перед удалением не забудьте СМЕНИТЬ кураторов групп при необходимости.">Удалить</a>
+        
+    </div>
+    <div class="col-12 mt-4">
+        <p style="font-size:30px">
+            <strong><em>Добавить преподавателя: </em></strong>
+            <a class="btn btn-outline-primary btn-lg" href="/Teacher/CreateTeacher">Добавить</a>
+        </p>
+        <p>
+            <a class="btn btn-dark" style="font-size: 20px; opacity: 0.6;" href="/Home/Index" title="Группы">Список групп</a>
+            <a class="btn btn-dark" style="font-size: 20px; opacity: 0.6;" href="/Home/TeacherList" title="Студенты">Список преподавателей</a>
+            <a class="btn btn-dark" style="font-size: 20px; opacity: 0.6;" href="/Home/StudentList" title="Студенты">Список студентов</a>
+        </p>
+    </div>
+</div>               

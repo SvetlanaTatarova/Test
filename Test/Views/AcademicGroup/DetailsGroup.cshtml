@@ -1,0 +1,104 @@
+﻿@model Test.ViewModels.AcademicGroupViewModel
+
+<div>
+    <center><h1>Академическая группа номер @Model.Name (@Model.ShortName)</h1></center>
+</div>
+
+<div class="row">
+    @{
+        foreach (var speciality in Model.allSpecialities)
+        {
+            if (speciality.Id == Model.SpecialityId)
+            {
+                <div class=" col-12 mt-4">
+                    <p class="dline" align="justify" style="font-size:25px"><strong><em>Специальность:</em></strong> @speciality.Name<br /></p>
+                </div>
+            }
+        }
+        <div class=" col-12 mt-1">
+            <p class="dline" align="justify" style="font-size:25px"><strong><em>Год начала обучения:</em></strong> @Model.YearOfStudy<br /></p>
+        </div>
+        foreach (var course in Model.allCourses)
+        {
+            if (course.Id == Model.CourseId)
+            {
+                <div class=" col-12 mt-1">
+                    <p class="dline" align="justify" style="font-size:25px"><strong><em>Курс:</em></strong> @course.CourseNumber<br /></p>
+                </div>
+            }
+        }
+<div class=" col-12 mt-2">
+    <a class="btn btn-outline-success btn-lg" asp-action="EditGroup" asp-controller="AcademicGroup" asp-route-id="@Model.Id">Изменить</a>
+    <a class="btn btn-outline-danger btn-lg" asp-action="DeleteGroup" asp-controller="AcademicGroup" asp-route-id="@Model.Id" title="ВНИМАНИЕ!!! Группа удалится со всеми студентами, обучающимися в ней.">Удалить</a>
+    <a class="btn btn-outline-primary btn-lg" href="/AcademicGroup/CreateGroup">Добавить</a>
+</div>
+    }
+
+    <div class=" col-12 mt-5">
+        <p style="font-size:25px"><strong><em>Куратор группы:</em></strong></p>
+    </div>
+    @{
+        foreach (var teacher in Model.allTeachers)
+        {
+            if (teacher.Id == Model.CuratorId)
+            {
+        <div class=" col-12 mt-3">
+
+            @{ if (teacher.Img != null)
+                {<img style="float:left; margin: 4px 7px 2px 4px;" src="@teacher.Img" alt="@teacher.Name" width="150" height="200" />}
+                else
+                {<img style="float:left; margin: 4px 7px 2px 4px;" src="/img/avatar.png" alt="@teacher.Name" width="150" height="200" />}
+
+                <p style="font-size:25px"><strong>@teacher.Name</strong></p>
+
+                <p style="font-size:22px">Должность: @teacher.Position</p>
+
+                if (teacher.PhoneNumber != null)
+                {<p style="font-size:22px">Номер телефона: @teacher.PhoneNumber</p>}
+                else
+                {<p style="font-size:22px">Номер телефона: - </p>}
+
+            <a class="btn btn-outline-success btn-lg" asp-action="EditTeacher" asp-controller="Teacher" asp-route-id="@teacher.Id">Изменить</a>
+            }
+        </div>
+            }
+
+        }
+    }
+
+    <div class="col-12 mt-4">
+        <p style="font-size:25px">
+            <strong><em>Студенты группы: </em></strong>
+            <a class="btn btn-outline-primary btn-lg" href="/Student/CreateStudent">Добавить</a>
+        </p>
+    </div>
+    
+    @{
+        foreach (var student in Model.allStudents)
+        {
+            if (student.GroupId == Model.Id)
+            {
+        <div class=" col-6 mt-4">
+            @{ 
+                if (student.Img != null)
+                {<img style="float:left; margin: 4px 7px 2px 4px;" src="@student.Img" alt="@student.Name" width="150" height="200" />}
+                else
+                {<img style="float:left; margin: 4px 7px 2px 4px;" src="/img/avatar.png" alt="@student.Name" width="150" height="200" />}
+
+                <p style="font-size:25px"><strong>@student.Name</strong></p>
+
+                if (student.PhoneNumber != null)
+                {<p style="font-size:22px">Номер телефона: @student.PhoneNumber</p>}
+                else
+                {<p style="font-size:22px">Номер телефона: - </p>}
+            }
+
+            <a class="btn btn-outline-success btn-lg" asp-action="EditStudent" asp-controller="Student" asp-route-id="@student.Id">Изменить</a>
+            <a class="btn btn-outline-danger btn-lg" asp-action="DeleteGroupStudent" asp-controller="Student" asp-route-id="@student.Id">Удалить</a>
+
+        </div>
+            }
+        }
+    }
+
+</div>

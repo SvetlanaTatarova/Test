@@ -1,0 +1,39 @@
+﻿@model Test.ViewModels.HomeViewModel
+
+<div>
+    <center><h1>Академические группы</h1></center>
+</div>
+
+
+<div class="col-12 mt-4">
+    <p style="font-size:30px">
+        <strong><em>Добавить группу: </em></strong>
+        <a class="btn btn-outline-primary btn-lg" href="/AcademicGroup/CreateGroup">Добавить</a>
+    </p>
+</div>
+
+<div id="modDialog" class="modal fade">
+    <div id="dialogContent" class="modal-dialog"></div>
+</div>
+
+<div class="row">
+    @{
+        foreach (var speciality in Model.GetAllSpecialities)
+        {
+            <div class=" col-12 mt-4">
+                <p class="dline" align="justify" style="font-size:33px">@speciality.Name</p>
+            </div>
+
+            foreach (var group in Model.GetAllGroups)
+            {
+                if (speciality.Id == group.SpecialityId)
+                {
+                    <div class=" col-lg-3">
+                        <p> <a class="btn btn-warning border-0  badge-secondary w-50" style="font-size: 23px; opacity: 0.6;" asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id" title="Подробнее">@group.ShortName</a></p>
+                    </div>
+                }
+            }
+        }
+    }
+</div>
+
