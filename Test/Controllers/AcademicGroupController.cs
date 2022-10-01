@@ -18,7 +18,7 @@ namespace Test.Controllers
             Group = _Group;
         }
 
-
+        // Вывод подробной информации о группе
         public IActionResult DetailsGroup(int? id)
         {
             if (id != null)
