@@ -11,11 +11,20 @@ namespace Test.Controllers
 {
     public class AcademicGroupController : Controller
     {
-        private readonly IAcademicGroup Group;       
 
-        public AcademicGroupController(IAcademicGroup _Group)
+        private readonly IAcademicGroup _group;
+        private readonly IStudent _student;
+        private readonly ITeacher _teacher;
+        private readonly ISpeciality _speciality;
+        private readonly ICourse _course;
+
+        public AcademicGroupController(IAcademicGroup group, IStudent student, ITeacher teacher, ISpeciality speciality, ICourse course)
         {
-            Group = _Group;
+            _group = group;
+            _course = course;
+            _speciality = speciality;
+            _student = student;
+            _teacher = teacher;
         }
 
         // Вывод подробной информации о группе
@@ -23,29 +32,59 @@ namespace Test.Controllers
         {
             if (id != null)
             {
-                ViewBag.Title = "Подробная информация группы";
-                return View(Group.GetOneGroup(id));
+                ViewBag.Title = "Информация о группе";
+                AcademicGroup group = _group.GetOneGroup(id);
+                var groupViewModel = new AcademicGroupViewModel()
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    ShortName = group.ShortName,
+                    YearOfStudy = group.YearOfStudy,
+                    CourseId = group.CourseId,
+                    SpecialityId = group.SpecialityId,
+                    CuratorId = group.CuratorId,
+                    allCourses = _course.GetCourse.ToList(),
+                    allSpecialities = _speciality.GetSpeciality.ToList(),
+                    allTeachers = _teacher.GetTeacher.ToList(),
+                    allStudents = _student.GetStudent.ToList()
+                };
+                return View(groupViewModel);
             }
-            return NotFound();            
+            return NotFound();
         }
 
 
         public IActionResult CreateGroup()
         {
             ViewBag.Title = "Добавление группы";
-            return View(Group.CreateGroup());
+            var group = new AcademicGroupViewModel()
+            {
+                allCourses = _course.GetCourse.ToList(),
+                allSpecialities = _speciality.GetSpeciality.ToList(),
+                allTeachers = _teacher.GetTeacher.ToList(),
+                YearOfStudy = 2022
+            };
+            return View(group);
         }
 
         [HttpPost]
-        public IActionResult CreateGroup(AcademicGroupViewModel _Group)
+        public IActionResult CreateGroup(AcademicGroupViewModel model)
         {
-            if (_Group != null)
+            if (model != null)
             {
-                AcademicGroupViewModel GROUP;                
-                GROUP = (AcademicGroupViewModel)Group.CreateGroupPost(_Group);
-                return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = GROUP.Id });
+                var newGroup = new AcademicGroup()
+                {
+                    Name = model.Name,
+                    ShortName = model.ShortName,
+                    YearOfStudy = model.YearOfStudy,
+                    CourseId = model.CourseId,
+                    SpecialityId = model.SpecialityId,
+                    CuratorId = model.CuratorId
+                };
+                AcademicGroup group = _group.CreateGroupPost(newGroup);
+                return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
             }    
-                return NotFound();            
+                return NotFound();
         }
 
 
@@ -53,21 +92,45 @@ namespace Test.Controllers
         {
             if (id != null)
             {
-                ViewBag.Title = "Редактирование группы";
-                return View(Group.EditGroup(id));
+                ViewBag.Title = "Редактирование информации о группе";
+                AcademicGroup group = _group.GetOneGroup(id);
+                var groupViewModel = new AcademicGroupViewModel()
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    ShortName = group.ShortName,
+                    YearOfStudy = group.YearOfStudy,
+                    CourseId = group.CourseId,
+                    SpecialityId = group.SpecialityId,
+                    CuratorId = group.CuratorId,
+                    allCourses = _course.GetCourse.ToList(),
+                    allSpecialities = _speciality.GetSpeciality.ToList(),
+                    allTeachers = _teacher.GetTeacher.ToList()
+                };
+                return View(groupViewModel);
             }                
             return NotFound();
         }
 
         [HttpPost]
-        public IActionResult EditGroup(AcademicGroupViewModel _Group)
+        public IActionResult EditGroup(AcademicGroupViewModel model)
         {
-            if (_Group != null)
+            if (model != null)
             { 
-                Group.EditGroupPost(_Group);
-                return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = _Group.Id });
+                var upGroup = new AcademicGroup()
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    ShortName = model.ShortName,
+                    YearOfStudy = model.YearOfStudy,
+                    CourseId = model.CourseId,
+                    SpecialityId = model.SpecialityId,
+                    CuratorId = model.CuratorId
+                };
+                var group = _group.EditGroupPost(upGroup);
+                return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
             }
-                return NotFound();            
+                return NotFound();
         }
 
 
@@ -75,7 +138,18 @@ namespace Test.Controllers
         {
             if (id != null)
             {
-                Group.Delete(id);
+                AcademicGroup group = _group.GetOneGroup(id);
+                if (group != null)
+                {
+                    foreach (Student student in _student.GetStudent)
+                    {
+                        if (student.GroupId == group.Id)
+                        {
+                            _student.DeleteWithGroup(student);
+                        }
+                    }
+                    _group.Delete(group);
+                }
                 return Redirect("/Home/Index");
             }
             return NotFound();

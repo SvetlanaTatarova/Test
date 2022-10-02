@@ -22,15 +22,17 @@ namespace Test.Data.Repository
             this.Context = Context;
             this.hostingEnvironment = hostingEnvironment;
         }
-
+        
+        
         public IEnumerable<Student> GetStudent => Context.Students;
+
 
         public Student GetOneStudent(int? id)
         {
             Student student = Context.Students.FirstOrDefault(p => p.Id == id);
             return student;
         }
-
+        
 
         public Student CreateStudentPost(Student student, IFormFile photo)
         {
@@ -49,6 +51,7 @@ namespace Test.Data.Repository
             return student;
         }
 
+
         public Student Delete(Student student)
         {
             Context.Students.Remove(student);
@@ -57,6 +60,13 @@ namespace Test.Data.Repository
         }
 
 
+        public Student DeleteWithGroup(Student student)
+        {
+            Context.Students.Remove(student);
+            return student;
+        }
+        
+        
         public Student EditStudentPost(Student student, IFormFile photo)
         {
             if (photo != null)

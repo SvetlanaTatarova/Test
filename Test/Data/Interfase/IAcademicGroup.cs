@@ -14,14 +14,14 @@ namespace Test.Data.Interfase
         AcademicGroup GetOneGroup(int? id);
 
         // Удаление группы
-        AcademicGroup Delete(int? id);
+        AcademicGroup Delete(AcademicGroup group);
 
         // Изменение группы
-        AcademicGroup EditGroup(int? id);
-        AcademicGroup EditGroupPost(AcademicGroupViewModel _Group);
+        //AcademicGroup EditGroup(int? id);
+        AcademicGroup EditGroupPost(AcademicGroup _Group);
 
         // Добавление группы
-        AcademicGroup CreateGroup();
-        AcademicGroup CreateGroupPost(AcademicGroupViewModel _Group);
+       // AcademicGroup CreateGroup();
+        AcademicGroup CreateGroupPost(AcademicGroup group);
     }
 }

@@ -29,7 +29,7 @@ namespace Test.Controllers
             {
                 ViewBag.Title = "Информация о преподавателе";
                 Teacher teacher = _teacher.GetOneTeacher(id);
-                var teacherViewModel = new TeacherViewModel
+                var teacherViewModel = new TeacherViewModel()
                 {
                     Id = teacher.Id,
                     Name = teacher.Name,
@@ -104,9 +104,9 @@ namespace Test.Controllers
         {
             if (id != null)
             {
-                ViewBag.Title = "Информация о преподавателе";
+                ViewBag.Title = "Редактирование информации о преподавателе";
                 Teacher teacher = _teacher.GetOneTeacher(id);
-                var teacherViewModel = new TeacherViewModel
+                var teacherViewModel = new TeacherViewModel()
                 {
                     Id = teacher.Id,
                     Name = teacher.Name,
@@ -125,7 +125,7 @@ namespace Test.Controllers
             if (model != null)
             {
 
-                var newTeacher = new Teacher()
+                var upTeacher = new Teacher()
                 {
                     Id = model.Id,
                     Name = model.Name,
@@ -133,7 +133,7 @@ namespace Test.Controllers
                     Position = model.Position,
                     Img = model.Img
                 };
-                var teacher = _teacher.EditTeacherPost(newTeacher, model.Photo);
+                var teacher = _teacher.EditTeacherPost(upTeacher, model.Photo);
                 return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
             }
             return NotFound();

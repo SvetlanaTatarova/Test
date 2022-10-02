@@ -25,11 +25,13 @@ namespace Test.Data.Repository
 
         public IEnumerable<Teacher> GetTeacher => Context.Teachers;
 
+
         public Teacher GetOneTeacher(int? id)
         {
             Teacher teacher = Context.Teachers.FirstOrDefault(p => p.Id == id);
             return teacher;
         }
+
 
         public Teacher CreateTeacherPost(Teacher teacher, IFormFile photo)
         {
@@ -48,12 +50,14 @@ namespace Test.Data.Repository
             return teacher;           
         }
 
+
         public Teacher Delete(Teacher teacher)
         {
             Context.Teachers.Remove(teacher);
             Context.SaveChanges();
             return teacher;
         }
+
 
         public Teacher EditTeacherPost(Teacher teacher, IFormFile photo)
         {

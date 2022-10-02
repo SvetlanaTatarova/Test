@@ -29,7 +29,7 @@ namespace Test.Controllers
             {
                 ViewBag.Title = "Информация о студенте";
                 Student student = _student.GetOneStudent(id);
-                var studentViewModel = new StudentViewModel
+                var studentViewModel = new StudentViewModel()
                 {
                     Id = student.Id,
                     Name = student.Name,
@@ -46,7 +46,7 @@ namespace Test.Controllers
         public IActionResult CreateStudent()
         {
             ViewBag.Title = "Добавление студента";
-            var student = new StudentViewModel
+            var student = new StudentViewModel()
             {
                 allGroups = _group.GetAcademicGroup.ToList()
             };
@@ -105,8 +105,9 @@ namespace Test.Controllers
         {
             if (id != null)
             {
+                ViewBag.Title = "Редактирование информации о студенте";
                 Student student = _student.GetOneStudent(id);
-                var studentViewModel = new StudentViewModel
+                var studentViewModel = new StudentViewModel()
                 {
                     Id = student.Id,
                     Name = student.Name,
@@ -125,7 +126,7 @@ namespace Test.Controllers
         {
             if (model != null)
             {
-                var newStudent = new Student()
+                var upStudent = new Student()
                 {
                     Id = model.Id,
                     Name = model.Name,
@@ -133,7 +134,7 @@ namespace Test.Controllers
                     GroupId = model.GroupId,
                     Img = model.Img
                 };
-                var student = _student.EditStudentPost(newStudent, model.Photo);
+                var student = _student.EditStudentPost(upStudent, model.Photo);
                 return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
             }
             return NotFound();

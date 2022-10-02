@@ -17,6 +17,9 @@ namespace Test.Data.Interfase
         // Удаление студента
         Student Delete(Student student);
 
+        //Удаление студента с группой
+        Student DeleteWithGroup(Student student);
+
         // Изменение студента
         Student EditStudentPost(Student student, IFormFile photo);
 

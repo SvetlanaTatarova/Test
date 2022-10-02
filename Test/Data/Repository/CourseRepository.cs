@@ -14,11 +14,12 @@ namespace Test.Data.Repository
     {
         private readonly ApplicationContext Context;
 
-        public CourseRepository(ApplicationContext Context, IWebHostEnvironment HostEnvironment)
+        public CourseRepository(ApplicationContext Context)
         {
             this.Context = Context;
         }
-
+        
+        
         public IEnumerable<Course> GetCourse => Context.Courses;
     }
 }

@@ -13,10 +13,12 @@ namespace Test.Data.Repository
     {
         private readonly ApplicationContext Context;
 
-        public SpecialityRepository(ApplicationContext Context, IWebHostEnvironment HostEnvironment)
+        public SpecialityRepository(ApplicationContext Context)
         {
             this.Context = Context;
         }
+
+
         public IEnumerable<Speciality> GetSpeciality => Context.Specialities;
     }
 }
