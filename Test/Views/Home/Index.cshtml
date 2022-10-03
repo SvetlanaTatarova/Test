@@ -18,13 +18,13 @@
 
 <div class="row">
     @{
-        foreach (var speciality in Model.GetAllSpecialities)
+        foreach (var speciality in Model.allSpecialities)
         {
             <div class=" col-12 mt-4">
                 <p class="dline" align="justify" style="font-size:33px">@speciality.Name</p>
             </div>
 
-            foreach (var group in Model.GetAllGroups)
+            foreach (var group in Model.allGroups)
             {
                 if (speciality.Id == group.SpecialityId)
                 {

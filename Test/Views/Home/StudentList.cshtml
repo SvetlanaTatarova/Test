@@ -13,7 +13,7 @@
 
 <div class="row">
     @{
-        foreach (var student in Model.GetAllStudents)
+        foreach (var student in Model.allStudents)
         {
         <div class=" col-6 mt-4">
             @{
@@ -24,7 +24,7 @@
 
                 <p style="font-size:25px"><strong>@student.Name</strong></p>
 
-                foreach (var group in Model.GetAllGroups)
+                foreach (var group in Model.allGroups)
                     if (student.GroupId == group.Id)
                     {<p style="font-size:22px">Номер группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>}
 

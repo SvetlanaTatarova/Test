@@ -14,53 +14,51 @@ namespace Test.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IAcademicGroup group;
-        private readonly ISpeciality speciality;
-        private readonly IStudent student;
-        private readonly ITeacher teacher;
-        private readonly ICourse course;
+        private readonly IAcademicGroup _group;
+        private readonly ISpeciality _speciality;
+        private readonly IStudent _student;
+        private readonly ITeacher _teacher;
 
-        public HomeController(IAcademicGroup _group, ISpeciality _speciality, IStudent _student, ITeacher _teacher, ICourse _course)
+        public HomeController(IAcademicGroup group, ISpeciality speciality, IStudent student, ITeacher teacher)
         {
-            group = _group;
-            speciality = _speciality;
-            student = _student;
-            teacher = _teacher;
-            course = _course;
+            _group = group;
+            _speciality = speciality;
+            _student = student;
+            _teacher = teacher;
         }
 
 
         public ViewResult Index()
         {
-            HomeViewModel obj = new HomeViewModel
+            var homeViewModel = new HomeViewModel()
             {
-                GetAllGroups = group.GetAcademicGroup,
-                GetAllSpecialities = speciality.GetSpeciality
+                allGroups = _group.GetAcademicGroup.ToList(),
+                allSpecialities = _speciality.GetSpeciality.ToList()
             };
             ViewBag.Title = "Группы";
-            return View(obj);
+            return View(homeViewModel);
         }
 
         public IActionResult StudentList()
         {
-            HomeViewModel obj = new HomeViewModel
+            var homeViewModel = new HomeViewModel()
             {
-                GetAllGroups = group.GetAcademicGroup,
-                GetAllStudents = student.GetStudent
+                allGroups = _group.GetAcademicGroup.ToList(),
+                allStudents = _student.GetStudent.ToList()
             };
             ViewBag.Title = "Студенты";
-            return View(obj);
+            return View(homeViewModel);
         }
 
         public IActionResult TeacherList()
         {
-            HomeViewModel obj = new HomeViewModel
+            var homeViewModel = new HomeViewModel()
             {
-                GetAllGroups = group.GetAcademicGroup,
-                GetAllTeachers = teacher.GetTeacher
+                allGroups = _group.GetAcademicGroup.ToList(),
+                allTeachers = _teacher.GetTeacher.ToList()
             };
             ViewBag.Title = "Преподаватели";
-            return View(obj);
+            return View(homeViewModel);
         }
 
     }

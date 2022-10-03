@@ -14,7 +14,7 @@
 
 <div class="row">
     @{
-        foreach (var teacher in Model.GetAllTeachers)
+        foreach (var teacher in Model.allTeachers)
         {
 
             <div class="col-6 mt-4">
@@ -32,7 +32,7 @@
                     else 
                     {<p style="font-size:22px">Номер телефона: - </p>}                    
 
-                    foreach (var group in Model.GetAllGroups)
+                    foreach (var group in Model.allGroups)
                     {
                         if (teacher.Id == group.CuratorId)
                         {

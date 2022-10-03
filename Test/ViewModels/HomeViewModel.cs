@@ -8,14 +8,10 @@ namespace Test.ViewModels
 {
     public class HomeViewModel
     {
-        //public IEnumerable<Course> GetAllCourses { get; set; }
+        public List<Speciality> allSpecialities { get; set; }
+        public List<Teacher> allTeachers { get; set; }
+        public List<AcademicGroup> allGroups { get; set; }
+        public List<Student> allStudents { get; set; }
 
-        public IEnumerable<Speciality> GetAllSpecialities { get; set; }
-
-        public IEnumerable<Teacher> GetAllTeachers { get; set; }
-
-        public IEnumerable<AcademicGroup> GetAllGroups { get; set; }
-
-        public IEnumerable<Student> GetAllStudents { get; set; }
     }
 }
