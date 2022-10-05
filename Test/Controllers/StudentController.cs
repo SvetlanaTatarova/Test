@@ -43,55 +43,25 @@ namespace Test.Controllers
             return NotFound();
         }
 
-        //[HttpGet]
-        //public IActionResult CreateStudent()
-        //{
-        //    ViewBag.Title = "Добавление студента";
-        //    var student = new StudentViewModel()
-        //    {
-        //        allGroups = _group.GetAcademicGroup.ToList()
-        //    };
-        //    return View(student);
-        //}
-
-        //[HttpPost]
-        //public IActionResult CreateStudent(StudentViewModel model)
-        //{ 
-
-
-        //    if (model != null)
-        //    {
-        //        //StudentViewModel studentView = model;
-
-        //            var newStudent = new Student()
-        //            {
-        //                Name = model.Name,
-        //                PhoneNumber = model.PhoneNumber,
-        //                GroupId = model.GroupId,
-        //                Img = model.Img
-        //            };
-        //        if (ModelState.IsValid)
-        //        {
-        //            var student = _student.CreateStudentPost(newStudent, model.Photo);
-        //            return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
-        //        }
-        //        return View();
-        //    }
-        //    return NotFound();
-        //}
-        [HttpGet]
-        public ViewResult CreateStudent()
+        public IActionResult CreateStudent()
         {
             ViewBag.Title = "Добавление студента";
-            return View();
+            var student = new StudentViewModel()
+            {
+                allGroups = _group.GetAcademicGroup.ToList()
+            };
+            return View(student);
         }
 
         [HttpPost]
         public IActionResult CreateStudent(StudentViewModel model)
         {
-            model.allGroups = _group.GetAcademicGroup.ToList();
-            StudentViewModel studentView = model;
-            
+
+
+            if (model != null)
+            {
+                //StudentViewModel studentView = model;
+
                 var newStudent = new Student()
                 {
                     Name = model.Name,
@@ -99,13 +69,14 @@ namespace Test.Controllers
                     GroupId = model.GroupId,
                     Img = model.Img
                 };
-            if (ModelState.IsValid)
-            {
-                var student = _student.CreateStudentPost(newStudent, model.Photo);
-                return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
+                if (ModelState.IsValid)
+                {
+                    var student = _student.CreateStudentPost(newStudent, model.Photo);
+                    return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
+                }
+                return RedirectToAction("CreateStudent", "Student");
             }
-            return View(studentView);
-
+            return NotFound();
         }
 
 
@@ -172,8 +143,12 @@ namespace Test.Controllers
                     GroupId = model.GroupId,
                     Img = model.Img
                 };
-                var student = _student.EditStudentPost(upStudent, model.Photo);
-                return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
+                if (ModelState.IsValid)
+                {
+                    var student = _student.EditStudentPost(upStudent, model.Photo);
+                    return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
+                }
+                return RedirectToAction("EditStudent", "Student");
             }
             return NotFound();
         }

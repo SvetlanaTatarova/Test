@@ -8,11 +8,13 @@
     <div class="form-group">
         <label asp-for="Name" class="control-label">Номер группы:</label>
         <input type="text" asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
 
     <div class="form-group">
         <label asp-for="ShortName" class="control-label">Сокращенный номер группы:</label>
         <input type="text" asp-for="ShortName" class="form-control" />
+        <span asp-validation-for="ShortName" class="text-danger"></span>
     </div>
 
     <div class="form-group">
@@ -22,7 +24,7 @@
 
     <div class="form-group">
         <label asp-for="allCourses">Выберите курс обучения группы:</label>
-        <select asp-for="CourseId" asp-items="@Model.allCourses.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.CourseNumber.ToString() })">
+        <select asp-for="CourseId" asp-items="@Model.allCourses.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.CourseNumber.ToString() })">           
         </select>
     </div>
 

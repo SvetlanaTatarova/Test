@@ -10,7 +10,6 @@ namespace Test.Models
     {
         public int Id { get; set; }
         [Required (ErrorMessage ="Введите Ф.И.О. студента!")]
-       // [RegularExpression(@"^[a-zA-яА-Я]+\[ ]+$", ErrorMessage = "В Ф.И.О. студента разрешается указывать буквы английского или русского языков, и цифры")]
         [MaxLength (50)]
         public string Name { get; set; } // ФИО студента
         public string PhoneNumber { get; set; } // Контактный номер телефона студента

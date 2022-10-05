@@ -81,8 +81,12 @@ namespace Test.Controllers
                     SpecialityId = model.SpecialityId,
                     CuratorId = model.CuratorId
                 };
-                AcademicGroup group = _group.CreateGroupPost(newGroup);
-                return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
+                if (ModelState.IsValid)
+                {
+                    AcademicGroup group = _group.CreateGroupPost(newGroup);
+                    return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
+                }
+                return RedirectToAction("CreateGroup", "AcademicGroup");
             }    
                 return NotFound();
         }
@@ -127,8 +131,12 @@ namespace Test.Controllers
                     SpecialityId = model.SpecialityId,
                     CuratorId = model.CuratorId
                 };
-                var group = _group.EditGroupPost(upGroup);
-                return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
+                if (ModelState.IsValid)
+                {
+                    var group = _group.EditGroupPost(upGroup);
+                    return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
+                }
+                return RedirectToAction("EditGroup", "AcademicGroup");
             }
                 return NotFound();
         }
