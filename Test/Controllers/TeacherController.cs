@@ -63,8 +63,12 @@ namespace Test.Controllers
                     Position = model.Position,
                     Img = model.Img
                 };
-                var teacher = _teacher.CreateTeacherPost(newTeacher, model.Photo);
-                return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
+                if (ModelState.IsValid)
+                {
+                    var teacher = _teacher.CreateTeacherPost(newTeacher, model.Photo);
+                    return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
+                }
+                return View();
             }
             return NotFound();            
         }
@@ -133,8 +137,12 @@ namespace Test.Controllers
                     Position = model.Position,
                     Img = model.Img
                 };
-                var teacher = _teacher.EditTeacherPost(upTeacher, model.Photo);
-                return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
+                if (ModelState.IsValid)
+                {
+                    var teacher = _teacher.EditTeacherPost(upTeacher, model.Photo);
+                    return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
+                }
+                return View();
             }
             return NotFound();
         }
