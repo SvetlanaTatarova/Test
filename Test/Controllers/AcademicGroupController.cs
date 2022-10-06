@@ -70,25 +70,25 @@ namespace Test.Controllers
         [HttpPost]
         public IActionResult CreateGroup(AcademicGroupViewModel model)
         {
-            if (model != null)
+            if (ModelState.IsValid)
             {
-                var newGroup = new AcademicGroup()
+                if (model != null)
                 {
-                    Name = model.Name,
-                    ShortName = model.ShortName,
-                    YearOfStudy = model.YearOfStudy,
-                    CourseId = model.CourseId,
-                    SpecialityId = model.SpecialityId,
-                    CuratorId = model.CuratorId
-                };
-                if (ModelState.IsValid)
-                {
+                    var newGroup = new AcademicGroup()
+                    {
+                        Name = model.Name,
+                        ShortName = model.ShortName,
+                        YearOfStudy = model.YearOfStudy,
+                        CourseId = model.CourseId,
+                        SpecialityId = model.SpecialityId,
+                        CuratorId = model.CuratorId
+                    };
                     AcademicGroup group = _group.CreateGroupPost(newGroup);
                     return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
                 }
-                return RedirectToAction("CreateGroup", "AcademicGroup");
-            }    
                 return NotFound();
+            }
+            return RedirectToAction("CreateGroup", "AcademicGroup");
         }
 
 
@@ -119,26 +119,26 @@ namespace Test.Controllers
         [HttpPost]
         public IActionResult EditGroup(AcademicGroupViewModel model)
         {
-            if (model != null)
-            { 
-                var upGroup = new AcademicGroup()
+            if (ModelState.IsValid)
+            {
+                if (model != null)
                 {
-                    Id = model.Id,
-                    Name = model.Name,
-                    ShortName = model.ShortName,
-                    YearOfStudy = model.YearOfStudy,
-                    CourseId = model.CourseId,
-                    SpecialityId = model.SpecialityId,
-                    CuratorId = model.CuratorId
-                };
-                if (ModelState.IsValid)
-                {
+                    var upGroup = new AcademicGroup()
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                        ShortName = model.ShortName,
+                        YearOfStudy = model.YearOfStudy,
+                        CourseId = model.CourseId,
+                        SpecialityId = model.SpecialityId,
+                        CuratorId = model.CuratorId
+                    };
                     var group = _group.EditGroupPost(upGroup);
                     return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
                 }
-                return RedirectToAction("EditGroup", "AcademicGroup");
-            }
                 return NotFound();
+            }
+            return RedirectToAction("EditGroup", "AcademicGroup");
         }
 
 

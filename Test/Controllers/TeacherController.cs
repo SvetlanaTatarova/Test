@@ -53,24 +53,23 @@ namespace Test.Controllers
         [HttpPost]
         public IActionResult CreateTeacher(TeacherViewModel model)
         {
-            if (model != null)
+            if (ModelState.IsValid)
             {
-               
-                var newTeacher = new Teacher()
+                if (model != null)
                 {
-                    Name = model.Name,
-                    PhoneNumber = model.PhoneNumber,
-                    Position = model.Position,
-                    Img = model.Img
-                };
-                if (ModelState.IsValid)
-                {
+                    var newTeacher = new Teacher()
+                    {
+                        Name = model.Name,
+                        PhoneNumber = model.PhoneNumber,
+                        Position = model.Position,
+                        Img = model.Img
+                    };
                     var teacher = _teacher.CreateTeacherPost(newTeacher, model.Photo);
                     return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
                 }
-                return View();
+                return NotFound();
             }
-            return NotFound();            
+            return View();
         }
 
         
@@ -92,7 +91,6 @@ namespace Test.Controllers
                     {
                         return View();
                     }
-
                 }
             }
             return NotFound();
@@ -126,25 +124,24 @@ namespace Test.Controllers
         [HttpPost]
         public IActionResult EditTeacher(TeacherViewModel model)
         {
-            if (model != null)
+            if (ModelState.IsValid)
             {
-
-                var upTeacher = new Teacher()
+                if (model != null)
                 {
-                    Id = model.Id,
-                    Name = model.Name,
-                    PhoneNumber = model.PhoneNumber,
-                    Position = model.Position,
-                    Img = model.Img
-                };
-                if (ModelState.IsValid)
-                {
+                    var upTeacher = new Teacher()
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                        PhoneNumber = model.PhoneNumber,
+                        Position = model.Position,
+                        Img = model.Img
+                    };
                     var teacher = _teacher.EditTeacherPost(upTeacher, model.Photo);
                     return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
                 }
-                return View();
+                return NotFound();
             }
-            return NotFound();
+            return View();
         }
     }
 }

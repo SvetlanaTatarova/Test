@@ -46,6 +46,7 @@ namespace Test.Controllers
         public IActionResult CreateStudent()
         {
             ViewBag.Title = "Добавление студента";
+            //return View();
             var student = new StudentViewModel()
             {
                 allGroups = _group.GetAcademicGroup.ToList()
@@ -56,27 +57,26 @@ namespace Test.Controllers
         [HttpPost]
         public IActionResult CreateStudent(StudentViewModel model)
         {
-
-
-            if (model != null)
+            //StudentViewModel studentView = model;
+            if (ModelState.IsValid)
             {
-                //StudentViewModel studentView = model;
+                if (model != null)
+                {
+                    var newStudent = new Student()
+                    {
+                        Name = model.Name,
+                        PhoneNumber = model.PhoneNumber,
+                        GroupId = model.GroupId,
+                        Img = model.Img
+                    };
 
-                var newStudent = new Student()
-                {
-                    Name = model.Name,
-                    PhoneNumber = model.PhoneNumber,
-                    GroupId = model.GroupId,
-                    Img = model.Img
-                };
-                if (ModelState.IsValid)
-                {
                     var student = _student.CreateStudentPost(newStudent, model.Photo);
                     return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
                 }
-                return RedirectToAction("CreateStudent", "Student");
+                return NotFound();
             }
-            return NotFound();
+            return View();
+            //return RedirectToAction("CreateStudent", "Student", new { model });
         }
 
 
@@ -133,24 +133,26 @@ namespace Test.Controllers
         [HttpPost]
         public IActionResult EditStudent(StudentViewModel model)
         {
-            if (model != null)
+            if (ModelState.IsValid)
             {
-                var upStudent = new Student()
+                if (model != null)
                 {
-                    Id = model.Id,
-                    Name = model.Name,
-                    PhoneNumber = model.PhoneNumber,
-                    GroupId = model.GroupId,
-                    Img = model.Img
-                };
-                if (ModelState.IsValid)
-                {
+                    var upStudent = new Student()
+                    {
+                        Id = model.Id,
+                        Name = model.Name,
+                        PhoneNumber = model.PhoneNumber,
+                        GroupId = model.GroupId,
+                        Img = model.Img
+                    };
                     var student = _student.EditStudentPost(upStudent, model.Photo);
                     return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
                 }
-                return RedirectToAction("EditStudent", "Student");
+                return NotFound();
             }
-            return NotFound();
+            model.Name = null;
+            return View();
+            //return RedirectToAction("EditStudent", "Student", new { model = model });
         }
     }
 
