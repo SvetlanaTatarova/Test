@@ -20,6 +20,6 @@ namespace Test.Data.Repository
         }
         
         
-        public IEnumerable<Course> GetCourse => Context.Courses;
+        public IEnumerable<Course> GetCourse => Context.Courses.OrderBy(p => p.CourseNumber);
     }
 }

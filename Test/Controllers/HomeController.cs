@@ -32,7 +32,7 @@ namespace Test.Controllers
         {
             var homeViewModel = new HomeViewModel()
             {
-                allGroups = _group.GetAcademicGroup.ToList(),
+                allGroups = _group.GetAcademicGroup().ToList(),
                 allSpecialities = _speciality.GetSpeciality.ToList()
             };
             ViewBag.Title = "Группы";
@@ -43,7 +43,7 @@ namespace Test.Controllers
         {
             var homeViewModel = new HomeViewModel()
             {
-                allGroups = _group.GetAcademicGroup.ToList(),
+                allGroups = _group.GetAcademicGroup().ToList(),
                 allStudents = _student.GetStudent.ToList()
             };
             ViewBag.Title = "Студенты";
@@ -54,7 +54,7 @@ namespace Test.Controllers
         {
             var homeViewModel = new HomeViewModel()
             {
-                allGroups = _group.GetAcademicGroup.ToList(),
+                allGroups = _group.GetAcademicGroup().ToList(),
                 allTeachers = _teacher.GetTeacher.ToList()
             };
             ViewBag.Title = "Преподаватели";

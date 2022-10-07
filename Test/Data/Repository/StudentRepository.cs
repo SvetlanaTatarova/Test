@@ -24,7 +24,7 @@ namespace Test.Data.Repository
         }
         
         
-        public IEnumerable<Student> GetStudent => Context.Students;
+        public IEnumerable<Student> GetStudent => Context.Students.OrderBy(p => p.Name);
 
 
         public Student GetOneStudent(int? id)

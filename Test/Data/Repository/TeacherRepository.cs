@@ -23,7 +23,7 @@ namespace Test.Data.Repository
             this.hostingEnvironment = hostingEnvironment;
         }
 
-        public IEnumerable<Teacher> GetTeacher => Context.Teachers;
+        public IEnumerable<Teacher> GetTeacher => Context.Teachers.OrderBy(p => p.Name);
 
 
         public Teacher GetOneTeacher(int? id)

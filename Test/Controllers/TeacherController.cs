@@ -36,7 +36,7 @@ namespace Test.Controllers
                     Position = teacher.Position,
                     PhoneNumber = teacher.PhoneNumber,
                     Img = teacher.Img,
-                    allGroups = _group.GetAcademicGroup.ToList()
+                    allGroups = _group.GetAcademicGroup().ToList()
                 };
                 return View(teacherViewModel);
             }
@@ -69,7 +69,8 @@ namespace Test.Controllers
                 }
                 return NotFound();
             }
-            return View();
+           // return BadRequest(ModelState);
+             return View();
         }
 
         
@@ -78,8 +79,8 @@ namespace Test.Controllers
             if (id != null)
             {
                 Teacher teacher = _teacher.GetOneTeacher(id);
-                List<AcademicGroup> allGroups = _group.GetAcademicGroup.ToList();
-                AcademicGroup group = _group.GetAcademicGroup.FirstOrDefault(p => p.CuratorId == id);
+                List<AcademicGroup> allGroups = _group.GetAcademicGroup().ToList();
+                AcademicGroup group = _group.GetAcademicGroup().FirstOrDefault(p => p.CuratorId == id);
                 if (teacher != null)
                 {
                     if (group == null)

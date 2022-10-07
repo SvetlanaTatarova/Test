@@ -20,13 +20,9 @@ namespace Test.Data.Repository
             this.Context = Context;
         }
 
-        public IEnumerable<AcademicGroup> GetAcademicGroup => Context.Groups;
-        
-        
-        public Student GetOneStudent(int? id)
+        public IEnumerable<AcademicGroup> GetAcademicGroup ()
         {
-            Student student = Context.Students.FirstOrDefault(p => p.Id == id);
-            return student;
+            return Context.Groups.OrderBy(p => p.ShortName);
         }
         
         

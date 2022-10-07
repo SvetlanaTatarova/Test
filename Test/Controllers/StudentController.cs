@@ -36,7 +36,7 @@ namespace Test.Controllers
                     PhoneNumber = student.PhoneNumber,
                     Img = student.Img,
                     GroupId = student.GroupId,
-                    allGroups = _group.GetAcademicGroup.ToList()
+                    allGroups = _group.GetAcademicGroup().ToList()
                 };
                 return View(studentViewModel);
             }
@@ -46,10 +46,9 @@ namespace Test.Controllers
         public IActionResult CreateStudent()
         {
             ViewBag.Title = "Добавление студента";
-            //return View();
             var student = new StudentViewModel()
             {
-                allGroups = _group.GetAcademicGroup.ToList()
+                allGroups = _group.GetAcademicGroup().ToList()
             };
             return View(student);
         }
@@ -57,7 +56,6 @@ namespace Test.Controllers
         [HttpPost]
         public IActionResult CreateStudent(StudentViewModel model)
         {
-            //StudentViewModel studentView = model;
             if (ModelState.IsValid)
             {
                 if (model != null)
@@ -75,8 +73,8 @@ namespace Test.Controllers
                 }
                 return NotFound();
             }
-            return View();
-            //return RedirectToAction("CreateStudent", "Student", new { model });
+           // return View();
+            return RedirectToAction("CreateStudent", "Student", new { model });
         }
 
 
@@ -123,7 +121,7 @@ namespace Test.Controllers
                     PhoneNumber = student.PhoneNumber,
                     Img = student.Img,
                     GroupId = student.GroupId,
-                    allGroups = _group.GetAcademicGroup.ToList()
+                    allGroups = _group.GetAcademicGroup().ToList()
                 };
                 return View(studentViewModel);
             }
@@ -150,9 +148,8 @@ namespace Test.Controllers
                 }
                 return NotFound();
             }
-            model.Name = null;
-            return View();
-            //return RedirectToAction("EditStudent", "Student", new { model = model });
+            //return View();
+            return RedirectToAction("EditStudent", "Student", new { model = model });
         }
     }
 

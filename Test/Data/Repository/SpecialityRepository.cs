@@ -19,6 +19,6 @@ namespace Test.Data.Repository
         }
 
 
-        public IEnumerable<Speciality> GetSpeciality => Context.Specialities;
+        public IEnumerable<Speciality> GetSpeciality => Context.Specialities.OrderBy(p => p.Name);
     }
 }
