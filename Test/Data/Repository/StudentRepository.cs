@@ -30,6 +30,7 @@ namespace Test.Data.Repository
         public Student GetOneStudent(int? id)
         {
             Student student = Context.Students.FirstOrDefault(p => p.Id == id);
+            student.Group = Context.Groups.FirstOrDefault(p => p.Id == student.GroupId);
             return student;
         }
         

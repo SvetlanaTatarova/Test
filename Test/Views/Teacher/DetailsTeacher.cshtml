@@ -19,22 +19,19 @@
 
             if (Model.PhoneNumber != null)
             {<p style="font-size:22px">Номер телефона: @Model.PhoneNumber</p>}
-            else
-            {<p style="font-size:22px">Номер телефона: - </p>}
+        else
+        {<p style="font-size:22px">Номер телефона: - </p>}
 
 
-            foreach (var group in Model.allGroups)
-            {
-                if (Model.Id == group.CuratorId)
-                {
-                    <p align="justify" style="font-size:22px">Куратор группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>
-                }
-            }
+        foreach (var group in Model.Groups)
+        {
+                <p align="justify" style="font-size:22px">Куратор группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>
         }
-        
+        }
+
         <a class="btn btn-outline-success btn-lg" asp-action="EditTeacher" asp-controller="Teacher" asp-route-id="@Model.Id">Изменить</a>
         <a class="btn btn-outline-danger btn-lg" asp-action="DeleteTeacher" asp-controller="Teacher" asp-route-id="@Model.Id" title="ВНИМАНИЕ!!! Перед удалением не забудьте СМЕНИТЬ кураторов групп при необходимости.">Удалить</a>
-        
+
     </div>
     <div class="col-12 mt-4">
         <p style="font-size:30px">

@@ -14,16 +14,13 @@
 
             <p style="font-size:25px"><strong>@Model.Name</strong></p>
 
-            foreach (var group in Model.allGroups)
-                if (Model.GroupId == group.Id)
-                {<p style="font-size:22px">Номер группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>}
-            
+            <p style="font-size:22px">Номер группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@Model.Group.Id"> @Model.Group.Name (@Model.Group.ShortName)</a></p>
+
             if (Model.PhoneNumber != null)
             {<p style="font-size:22px">Номер телефона: @Model.PhoneNumber</p>}
             else
             {<p style="font-size:22px">Номер телефона: - </p>}
-        }
-
+            }
         <a class="btn btn-outline-success btn-lg" asp-action="EditStudent" asp-controller="Student" asp-route-id="@Model.Id">Изменить</a>
         <a class="btn btn-outline-danger btn-lg" asp-action="DeleteStudent" asp-controller="Student" asp-route-id="@Model.Id">Удалить</a>
     </div>

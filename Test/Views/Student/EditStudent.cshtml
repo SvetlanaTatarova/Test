@@ -13,8 +13,8 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="allGroups">Выберите группу:</label>
-        <select asp-for="GroupId" asp-items="@Model.allGroups.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name+"("+ _.ShortName+")" })">
+        <label asp-for="Groups">Выберите группу:</label>
+        <select asp-for="GroupId" asp-items="@Model.Groups.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name+"("+ _.ShortName+")" })">
         </select>
     </div>
 

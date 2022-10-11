@@ -32,6 +32,7 @@ namespace Test.Controllers
         {
             var homeViewModel = new HomeViewModel()
             {
+                //allGroups = _group.GetAcademicGroup.ToList(),
                 allGroups = _group.GetAcademicGroup().ToList(),
                 allSpecialities = _speciality.GetSpeciality.ToList()
             };
@@ -43,6 +44,7 @@ namespace Test.Controllers
         {
             var homeViewModel = new HomeViewModel()
             {
+                //allGroups = _group.GetAcademicGroup.ToList(),
                 allGroups = _group.GetAcademicGroup().ToList(),
                 allStudents = _student.GetStudent.ToList()
             };
@@ -54,6 +56,7 @@ namespace Test.Controllers
         {
             var homeViewModel = new HomeViewModel()
             {
+                //allGroups = _group.GetAcademicGroup.ToList(),
                 allGroups = _group.GetAcademicGroup().ToList(),
                 allTeachers = _teacher.GetTeacher.ToList()
             };

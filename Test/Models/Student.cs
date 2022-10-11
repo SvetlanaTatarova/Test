@@ -16,5 +16,6 @@ namespace Test.Models
         public string Img { get; set; } // Фотография студента
 
         public int GroupId { get; set; } // Id группы, в которой обучается студент
+        public AcademicGroup Group { get; set; }
     }
 }

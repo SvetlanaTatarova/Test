@@ -29,6 +29,7 @@ namespace Test.Controllers
             {
                 ViewBag.Title = "Информация о студенте";
                 Student student = _student.GetOneStudent(id);
+
                 var studentViewModel = new StudentViewModel()
                 {
                     Id = student.Id,
@@ -36,7 +37,7 @@ namespace Test.Controllers
                     PhoneNumber = student.PhoneNumber,
                     Img = student.Img,
                     GroupId = student.GroupId,
-                    allGroups = _group.GetAcademicGroup().ToList()
+                    Group = student.Group
                 };
                 return View(studentViewModel);
             }
@@ -46,9 +47,39 @@ namespace Test.Controllers
         public IActionResult CreateStudent()
         {
             ViewBag.Title = "Добавление студента";
+
+            int n = 0;
+            foreach (AcademicGroup group in _group.GetAcademicGroup().ToList())
+            {
+                n++;
+            }
+            int i = 0;
+            AcademicGroupViewModel[] academicGroupViews = new AcademicGroupViewModel[n];
+
+            foreach (var group in _group.GetAcademicGroup().ToList())
+            {
+                var groupViewModel = new AcademicGroupViewModel
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    ShortName = group.ShortName,
+                    YearOfStudy = group.YearOfStudy,
+                    SpecialityId = group.SpecialityId,
+                    CourseId = group.CourseId,
+                    CuratorId = group.CuratorId,
+                };
+
+
+                if (groupViewModel != null)
+                    {
+                        academicGroupViews[i] = groupViewModel;
+                        i++;
+                    }
+            };
+
             var student = new StudentViewModel()
             {
-                allGroups = _group.GetAcademicGroup().ToList()
+                Groups = academicGroupViews.ToList()
             };
             return View(student);
         }
@@ -65,6 +96,7 @@ namespace Test.Controllers
                         Name = model.Name,
                         PhoneNumber = model.PhoneNumber,
                         GroupId = model.GroupId,
+                        Group = _group.GetOneGroup(model.GroupId),
                         Img = model.Img
                     };
 
@@ -73,8 +105,8 @@ namespace Test.Controllers
                 }
                 return NotFound();
             }
-           // return View();
-            return RedirectToAction("CreateStudent", "Student", new { model });
+            return View();
+            //return RedirectToAction("CreateStudent", "Student", new { model });
         }
 
 
@@ -114,6 +146,35 @@ namespace Test.Controllers
             {
                 ViewBag.Title = "Редактирование информации о студенте";
                 Student student = _student.GetOneStudent(id);
+
+                int n = 0;
+                foreach (AcademicGroup group in _group.GetAcademicGroup().ToList())
+                {
+                    n++;
+                }
+                int i = 0;
+                AcademicGroupViewModel[] academicGroupViews = new AcademicGroupViewModel[n];
+
+                foreach (var group in _group.GetAcademicGroup().ToList())
+                {
+                    var groupViewModel = new AcademicGroupViewModel
+                    {
+                        Id = group.Id,
+                        Name = group.Name,
+                        ShortName = group.ShortName,
+                        YearOfStudy = group.YearOfStudy,
+                        SpecialityId = group.SpecialityId,
+                        CourseId = group.CourseId,
+                        CuratorId = group.CuratorId,
+                    };
+
+                    if (groupViewModel != null)
+                    {
+                        academicGroupViews[i] = groupViewModel;
+                        i++;
+                    }
+                };
+
                 var studentViewModel = new StudentViewModel()
                 {
                     Id = student.Id,
@@ -121,7 +182,8 @@ namespace Test.Controllers
                     PhoneNumber = student.PhoneNumber,
                     Img = student.Img,
                     GroupId = student.GroupId,
-                    allGroups = _group.GetAcademicGroup().ToList()
+                    Group = student.Group,
+                    Groups = academicGroupViews.ToList()
                 };
                 return View(studentViewModel);
             }
@@ -141,6 +203,7 @@ namespace Test.Controllers
                         Name = model.Name,
                         PhoneNumber = model.PhoneNumber,
                         GroupId = model.GroupId,
+                        Group = model.Group,
                         Img = model.Img
                     };
                     var student = _student.EditStudentPost(upStudent, model.Photo);

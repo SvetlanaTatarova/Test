@@ -29,6 +29,45 @@ namespace Test.Controllers
             {
                 ViewBag.Title = "Информация о преподавателе";
                 Teacher teacher = _teacher.GetOneTeacher(id);
+
+                int n = 0;
+                foreach (AcademicGroup group in _group.GetAcademicGroup().ToList())
+                {
+                    if (group.CuratorId == teacher.Id)
+                    {
+                        n++;
+                    }
+                }
+                int i = 0;
+                AcademicGroupViewModel[] academicGroupViews = new AcademicGroupViewModel[n];
+               
+                foreach (var group in _group.GetAcademicGroup().ToList() )
+                {
+                    if (group.CuratorId == teacher.Id)
+                    {
+                        var groupViewModel = new AcademicGroupViewModel
+                        {
+                            Id = group.Id,
+                            Name = group.Name,
+                            ShortName = group.ShortName,
+                            YearOfStudy = group.YearOfStudy,
+                            SpecialityId = group.SpecialityId,
+                            //allSpecialities = Context.Specialities.ToList(),
+                            CourseId = group.CourseId,
+                            //allCourses = Context.Courses.ToList(),
+                            CuratorId = group.CuratorId,
+                            //allTeachers = Context.Teachers.ToList(),
+                            //allStudents = Context.Students.ToList()
+                        };
+                    
+                        if (groupViewModel != null)
+                        {
+                            academicGroupViews[i] = groupViewModel;
+                            i++;
+                        }
+                    }
+                };
+
                 var teacherViewModel = new TeacherViewModel()
                 {
                     Id = teacher.Id,
@@ -36,7 +75,8 @@ namespace Test.Controllers
                     Position = teacher.Position,
                     PhoneNumber = teacher.PhoneNumber,
                     Img = teacher.Img,
-                    allGroups = _group.GetAcademicGroup().ToList()
+                    Groups = academicGroupViews.ToList(),
+                    //allGroups = _group.GetAcademicGroup.ToList()
                 };
                 return View(teacherViewModel);
             }
@@ -69,8 +109,7 @@ namespace Test.Controllers
                 }
                 return NotFound();
             }
-           // return BadRequest(ModelState);
-             return View();
+            return View();
         }
 
         
@@ -79,7 +118,6 @@ namespace Test.Controllers
             if (id != null)
             {
                 Teacher teacher = _teacher.GetOneTeacher(id);
-                List<AcademicGroup> allGroups = _group.GetAcademicGroup().ToList();
                 AcademicGroup group = _group.GetAcademicGroup().FirstOrDefault(p => p.CuratorId == id);
                 if (teacher != null)
                 {
