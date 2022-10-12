@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Test.ViewModels;
 
 namespace Test.Models
 {
@@ -17,5 +18,6 @@ namespace Test.Models
 
         public int GroupId { get; set; } // Id группы, в которой обучается студент
         public AcademicGroup Group { get; set; }
+        public List<AcademicGroup> Groups { get; set; }
     }
 }

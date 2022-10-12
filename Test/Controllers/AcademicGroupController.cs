@@ -33,21 +33,28 @@ namespace Test.Controllers
             if (id != null)
             {
                 ViewBag.Title = "Информация о группе";
-                AcademicGroup group = _group.GetOneGroup(id);
-                var groupViewModel = new AcademicGroupViewModel()
+                AcademicGroupViewModel groupViewModel = (AcademicGroupViewModel)_group.GetOneGroup(id);
+                
+                int n = 0;
+                foreach (Student student in _student.GetStudent)
                 {
-                    Id = group.Id,
-                    Name = group.Name,
-                    ShortName = group.ShortName,
-                    YearOfStudy = group.YearOfStudy,
-                    CourseId = group.CourseId,
-                    SpecialityId = group.SpecialityId,
-                    CuratorId = group.CuratorId,
-                    allCourses = _course.GetCourse.ToList(),
-                    allSpecialities = _speciality.GetSpeciality.ToList(),
-                    allTeachers = _teacher.GetTeacher.ToList(),
-                    allStudents = _student.GetStudent.ToList()
+                    if (student.GroupId == groupViewModel.Id)
+                    {
+                        n++;
+                    }
+                }
+                int i = 0;
+                Student[] studentViews = new Student[n];
+                foreach (var student in _student.GetStudent)
+                {
+                    if (student.GroupId == groupViewModel.Id)
+                    {
+                        studentViews[i] = student;
+                        i++;
+                    }
                 };
+
+                groupViewModel.Students = studentViews.ToList();
                 return View(groupViewModel);
             }
             return NotFound();
@@ -59,9 +66,9 @@ namespace Test.Controllers
             ViewBag.Title = "Добавление группы";
             var group = new AcademicGroupViewModel()
             {
-                allCourses = _course.GetCourse.ToList(),
-                allSpecialities = _speciality.GetSpeciality.ToList(),
-                allTeachers = _teacher.GetTeacher.ToList(),
+                Courses = _course.GetCourse.ToList(),
+                Specialities = _speciality.GetSpeciality.ToList(),
+                Teachers = _teacher.GetTeacher.ToList(),
                 YearOfStudy = 2022
             };
             return View(group);
@@ -74,20 +81,13 @@ namespace Test.Controllers
             {
                 if (model != null)
                 {
-                    var newGroup = new AcademicGroup()
-                    {
-                        Name = model.Name,
-                        ShortName = model.ShortName,
-                        YearOfStudy = model.YearOfStudy,
-                        CourseId = model.CourseId,
-                        SpecialityId = model.SpecialityId,
-                        CuratorId = model.CuratorId
-                    };
+                    AcademicGroup newGroup = (AcademicGroup)model;
                     AcademicGroup group = _group.CreateGroupPost(newGroup);
                     return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
                 }
                 return NotFound();
             }
+            //return View();
             return RedirectToAction("CreateGroup", "AcademicGroup");
         }
 
@@ -97,20 +97,10 @@ namespace Test.Controllers
             if (id != null)
             {
                 ViewBag.Title = "Редактирование информации о группе";
-                AcademicGroup group = _group.GetOneGroup(id);
-                var groupViewModel = new AcademicGroupViewModel()
-                {
-                    Id = group.Id,
-                    Name = group.Name,
-                    ShortName = group.ShortName,
-                    YearOfStudy = group.YearOfStudy,
-                    CourseId = group.CourseId,
-                    SpecialityId = group.SpecialityId,
-                    CuratorId = group.CuratorId,
-                    allCourses = _course.GetCourse.ToList(),
-                    allSpecialities = _speciality.GetSpeciality.ToList(),
-                    allTeachers = _teacher.GetTeacher.ToList()
-                };
+                AcademicGroupViewModel groupViewModel = (AcademicGroupViewModel) _group.GetOneGroup(id);
+                groupViewModel.Courses = _course.GetCourse.ToList();
+                groupViewModel.Specialities = _speciality.GetSpeciality.ToList();
+                groupViewModel.Teachers = _teacher.GetTeacher.ToList();
                 return View(groupViewModel);
             }                
             return NotFound();
@@ -123,21 +113,13 @@ namespace Test.Controllers
             {
                 if (model != null)
                 {
-                    var upGroup = new AcademicGroup()
-                    {
-                        Id = model.Id,
-                        Name = model.Name,
-                        ShortName = model.ShortName,
-                        YearOfStudy = model.YearOfStudy,
-                        CourseId = model.CourseId,
-                        SpecialityId = model.SpecialityId,
-                        CuratorId = model.CuratorId
-                    };
+                    AcademicGroup upGroup = (AcademicGroup)model;
                     var group = _group.EditGroupPost(upGroup);
                     return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = group.Id });
                 }
                 return NotFound();
             }
+            //return View();
             return RedirectToAction("EditGroup", "AcademicGroup");
         }
 

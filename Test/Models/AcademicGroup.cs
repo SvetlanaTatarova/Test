@@ -22,11 +22,16 @@ namespace Test.Models
 
         public int CourseId { get; set; } // Id курса обучения группы
         public Course Course { get; set; }
+       // public List<Course> Courses { get; set; }
 
         public int SpecialityId { get; set; } // Id специальности группы
         public Speciality Speciality { get; set; }
+       // public List<Speciality> Specialities { get; set; }
 
         public int CuratorId { get; set; } //Id куратора группы
         public Teacher Curator { get; set; }
+       // public List<Teacher> Teachers { get; set; }
+
+       // public List<Student> Students { get; set; }
     }
 }

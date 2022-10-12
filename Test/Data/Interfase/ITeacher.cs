@@ -12,6 +12,8 @@ namespace Test.Data.Interfase
     {
         IEnumerable<Teacher> GetTeacher { get; }
 
+        //IEnumerable<Teacher> GetTeacher();
+
         Teacher GetOneTeacher(int? id);
 
         // Удаление преподавателя

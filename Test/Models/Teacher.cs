@@ -19,5 +19,7 @@ namespace Test.Models
         public string Position { get; set; } // Должность преподавателя
         public string PhoneNumber { get; set; } // Контактный номер телефона преподавателя
         public string Img { get; set; } // Фотография преподавателя
+
+        public List<AcademicGroup> Groups { get; set; }
     }
 }

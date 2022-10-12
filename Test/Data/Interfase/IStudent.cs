@@ -12,6 +12,8 @@ namespace Test.Data.Interfase
     {
         IEnumerable<Student> GetStudent { get; }
 
+        //IEnumerable<Student> GetStudent();
+
         Student GetOneStudent(int? id);
 
         // Удаление студента

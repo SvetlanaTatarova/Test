@@ -15,35 +15,27 @@ namespace Test.Controllers
     {
         private readonly IStudent _student;
         private readonly IAcademicGroup _group;
-
         public StudentController(IStudent student, IAcademicGroup group)
         {
             _student = student;
             _group = group;
         }
-
-
+        
+        
+        
         public IActionResult DetailsStudent(int? id)
         {
             if (id != null)
             {
                 ViewBag.Title = "Информация о студенте";
-                Student student = _student.GetOneStudent(id);
-
-                var studentViewModel = new StudentViewModel()
-                {
-                    Id = student.Id,
-                    Name = student.Name,
-                    PhoneNumber = student.PhoneNumber,
-                    Img = student.Img,
-                    GroupId = student.GroupId,
-                    Group = student.Group
-                };
+                StudentViewModel studentViewModel = (StudentViewModel)_student.GetOneStudent(id);
                 return View(studentViewModel);
             }
             return NotFound();
         }
-
+        
+        
+        
         public IActionResult CreateStudent()
         {
             ViewBag.Title = "Добавление студента";
@@ -54,36 +46,24 @@ namespace Test.Controllers
                 n++;
             }
             int i = 0;
-            AcademicGroupViewModel[] academicGroupViews = new AcademicGroupViewModel[n];
+            AcademicGroup[] academicGroup = new AcademicGroup[n];
 
             foreach (var group in _group.GetAcademicGroup().ToList())
             {
-                var groupViewModel = new AcademicGroupViewModel
-                {
-                    Id = group.Id,
-                    Name = group.Name,
-                    ShortName = group.ShortName,
-                    YearOfStudy = group.YearOfStudy,
-                    SpecialityId = group.SpecialityId,
-                    CourseId = group.CourseId,
-                    CuratorId = group.CuratorId,
-                };
-
-
-                if (groupViewModel != null)
+                if (group != null)
                     {
-                        academicGroupViews[i] = groupViewModel;
+                        academicGroup[i] = group;
                         i++;
                     }
             };
 
             var student = new StudentViewModel()
             {
-                Groups = academicGroupViews.ToList()
+                Groups = academicGroup.ToList()
             };
+            //return View();
             return View(student);
         }
-
         [HttpPost]
         public IActionResult CreateStudent(StudentViewModel model)
         {
@@ -91,25 +71,18 @@ namespace Test.Controllers
             {
                 if (model != null)
                 {
-                    var newStudent = new Student()
-                    {
-                        Name = model.Name,
-                        PhoneNumber = model.PhoneNumber,
-                        GroupId = model.GroupId,
-                        Group = _group.GetOneGroup(model.GroupId),
-                        Img = model.Img
-                    };
-
+                    Student newStudent = (Student)model;
                     var student = _student.CreateStudentPost(newStudent, model.Photo);
                     return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
                 }
                 return NotFound();
             }
-            return View();
-            //return RedirectToAction("CreateStudent", "Student", new { model });
+            //return View();
+            return RedirectToAction("CreateStudent", "Student", new { model });
         }
-
-
+        
+        
+        
         public IActionResult DeleteStudent(int? id)
         {
             if (id != null)
@@ -123,7 +96,9 @@ namespace Test.Controllers
             }
             return NotFound();
         }
-
+        
+        
+        
         public IActionResult DeleteGroupStudent(int? id)
         {
             if (id != null)
@@ -138,8 +113,9 @@ namespace Test.Controllers
             }
             return NotFound();
         }
-
-
+        
+        
+        
         public IActionResult EditStudent(int? id)
         {
             if (id != null)
@@ -147,49 +123,29 @@ namespace Test.Controllers
                 ViewBag.Title = "Редактирование информации о студенте";
                 Student student = _student.GetOneStudent(id);
 
-                int n = 0;
-                foreach (AcademicGroup group in _group.GetAcademicGroup().ToList())
-                {
-                    n++;
-                }
-                int i = 0;
-                AcademicGroupViewModel[] academicGroupViews = new AcademicGroupViewModel[n];
+                //int n = 0;
+                //foreach (AcademicGroup group in _group.GetAcademicGroup().ToList())
+                //{
+                //    n++;
+                //}
+                //int i = 0;
+                //AcademicGroupViewModel[] academicGroupViews = new AcademicGroupViewModel[n];
 
-                foreach (var group in _group.GetAcademicGroup().ToList())
-                {
-                    var groupViewModel = new AcademicGroupViewModel
-                    {
-                        Id = group.Id,
-                        Name = group.Name,
-                        ShortName = group.ShortName,
-                        YearOfStudy = group.YearOfStudy,
-                        SpecialityId = group.SpecialityId,
-                        CourseId = group.CourseId,
-                        CuratorId = group.CuratorId,
-                    };
+                //foreach (var group in _group.GetAcademicGroup().ToList())
+                //{
+                //    if (group != null)
+                //    {
+                //        academicGroupViews[i] = (AcademicGroupViewModel)group;
+                //        i++;
+                //    }
+                //};
 
-                    if (groupViewModel != null)
-                    {
-                        academicGroupViews[i] = groupViewModel;
-                        i++;
-                    }
-                };
-
-                var studentViewModel = new StudentViewModel()
-                {
-                    Id = student.Id,
-                    Name = student.Name,
-                    PhoneNumber = student.PhoneNumber,
-                    Img = student.Img,
-                    GroupId = student.GroupId,
-                    Group = student.Group,
-                    Groups = academicGroupViews.ToList()
-                };
+                StudentViewModel studentViewModel = (StudentViewModel)student;
+                studentViewModel.Groups = _group.GetAcademicGroup().ToList();
                 return View(studentViewModel);
             }
             return NotFound();
         }
-
         [HttpPost]
         public IActionResult EditStudent(StudentViewModel model)
         {
@@ -197,15 +153,7 @@ namespace Test.Controllers
             {
                 if (model != null)
                 {
-                    var upStudent = new Student()
-                    {
-                        Id = model.Id,
-                        Name = model.Name,
-                        PhoneNumber = model.PhoneNumber,
-                        GroupId = model.GroupId,
-                        Group = model.Group,
-                        Img = model.Img
-                    };
+                    Student upStudent = (Student)model;
                     var student = _student.EditStudentPost(upStudent, model.Photo);
                     return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
                 }

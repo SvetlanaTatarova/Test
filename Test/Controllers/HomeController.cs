@@ -30,6 +30,20 @@ namespace Test.Controllers
 
         public ViewResult Index()
         {
+            //int n = 0;
+            //foreach(Speciality speciality in _speciality.GetSpeciality)
+            //{
+            //    n++;
+            //}
+            //SpecialityViewModel[] specialityView = new SpecialityViewModel[n];
+            //foreach (Speciality speciality in _speciality.GetSpeciality)
+            //{
+            //    var specialityViewModel = new SpecialityViewModel()
+            //{
+            //    Id = speciality.Id,
+            //    Name = speciality.Name,
+
+            //};
             var homeViewModel = new HomeViewModel()
             {
                 //allGroups = _group.GetAcademicGroup.ToList(),

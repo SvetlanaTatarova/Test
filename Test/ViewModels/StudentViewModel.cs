@@ -8,7 +8,7 @@ using Test.Models;
 
 namespace Test.ViewModels
 {
-    public class StudentViewModel//: Student
+    public class StudentViewModel
     {
         public int Id { get; set; }
 
@@ -20,26 +20,41 @@ namespace Test.ViewModels
 
         public int GroupId { get; set; } 
         public AcademicGroup Group { get; set; }
+       
 
 
-       // public List<AcademicGroup> allGroups { get; set; }
         public IFormFile Photo { get; set; }
-
-        public List<AcademicGroupViewModel> Groups { get; set; }
+        public List<AcademicGroup> Groups { get; set; }
 
 
         //public static implicit operator StudentViewModel(Student student)
-        //{
-        //   var studentViewModel = new StudentViewModel
-        //    {
-        //        Id = student.Id,
-        //        Name = student.Name,
-        //        PhoneNumber = student.PhoneNumber,
-        //        Img = student.Img,
-        //        GroupId = student.GroupId,
-        //        Group = student.Group
-        //    };
-        //    return studentViewModel;
-        //}
+        public static explicit operator StudentViewModel(Student student)
+        {
+            var studentViewModel = new StudentViewModel
+            {
+                Id = student.Id,
+                Name = student.Name,
+                PhoneNumber = student.PhoneNumber,
+                Img = student.Img,
+                GroupId = student.GroupId,
+                Group = student.Group,
+                Groups = student.Groups
+            };
+            return studentViewModel;
+        }
+
+        public static explicit operator Student(StudentViewModel studentViewModel)
+        {
+            var student = new Student
+            {
+                Id = studentViewModel.Id,
+                Name = studentViewModel.Name,
+                PhoneNumber = studentViewModel.PhoneNumber,
+                Img = studentViewModel.Img,
+                GroupId = studentViewModel.GroupId,
+                Group = studentViewModel.Group
+            };
+            return student;
+        }
     }
 }

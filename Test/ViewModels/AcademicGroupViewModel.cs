@@ -7,7 +7,7 @@ using Test.Models;
 
 namespace Test.ViewModels
 {
-    public class AcademicGroupViewModel//: AcademicGroup
+    public class AcademicGroupViewModel
     {
         public int Id { get; set; }
 
@@ -19,27 +19,26 @@ namespace Test.ViewModels
         [MaxLength(50)]
         public string ShortName { get; set; } 
         public int YearOfStudy { get; set; } 
+
         public int CourseId { get; set; } 
         public Course Course { get; set; }
+        
 
         public int SpecialityId { get; set; } 
         public Speciality Speciality { get; set; }
+        
 
         public int CuratorId { get; set; } 
         public Teacher Curator { get; set; }
+        
 
 
-        public List<TeacherViewModel> Teachers { get; set; }
-        public List<CourseViewModel> Courses { get; set; }
-        public List<SpecialityViewModel> Specialities { get; set; }
-        public List<StudentViewModel> Students { get; set; }
+        public List<Course> Courses { get; set; }
+        public List<Speciality> Specialities { get; set; }
+        public List<Teacher> Teachers { get; set; }
+        public List<Student> Students { get; set; }
+       
 
-
-
-        public List<Teacher> allTeachers { get; set; }
-        public List<Course> allCourses { get; set; }
-        public List<Speciality> allSpecialities { get; set; }
-        public List<Student> allStudents { get; set; }
 
 
 
@@ -53,14 +52,35 @@ namespace Test.ViewModels
                     YearOfStudy = academic.YearOfStudy,
                     SpecialityId = academic.SpecialityId,
                     Speciality = academic.Speciality,
+                    //Specialities = academic.Specialities,
                     CourseId = academic.CourseId,
                     Course = academic.Course,
+                    //Courses = academic.Courses,
                     CuratorId = academic.CuratorId,
                     Curator = academic.Curator,
+                    //Teachers = academic.Teachers,
+                    //Students = academic.Students
                 };                
             return groupViewModel;
         }
 
-       
+        public static explicit operator AcademicGroup(AcademicGroupViewModel groupViewModel)
+        {
+            var academic = new AcademicGroup
+            {
+                Id = groupViewModel.Id,
+                Name = groupViewModel.Name,
+                ShortName = groupViewModel.ShortName,
+                YearOfStudy = groupViewModel.YearOfStudy,
+                SpecialityId = groupViewModel.SpecialityId,
+                Speciality = groupViewModel.Speciality,
+                CourseId = groupViewModel.CourseId,
+                Course = groupViewModel.Course,
+                CuratorId = groupViewModel.CuratorId,
+                Curator = groupViewModel.Curator,
+            };
+            return academic;
+        }
+
     }
 }

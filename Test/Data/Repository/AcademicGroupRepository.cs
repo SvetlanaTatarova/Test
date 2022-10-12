@@ -24,7 +24,6 @@ namespace Test.Data.Repository
 
         public IEnumerable<AcademicGroup> GetAcademicGroup()
         {
-            //int n = Context.Groups.OrderBy(p => p.Id).Last().Id;
             int n = 0;
             foreach (AcademicGroup group in Context.Groups)
             { n++; }
@@ -35,8 +34,12 @@ namespace Test.Data.Repository
                 if (group != null)
                 {
                     group.Speciality = Context.Specialities.FirstOrDefault(p => p.Id == group.SpecialityId);
+                    //group.Specialities = Context.Specialities.ToList();
                     group.Course = Context.Courses.FirstOrDefault(p => p.Id == group.CourseId);
+                    //group.Courses = Context.Courses.ToList();
                     group.Curator = Context.Teachers.FirstOrDefault(p => p.Id == group.CuratorId);
+                    //group.Teachers = Context.Teachers.ToList();
+                    //group.Students = Context.Students.ToList();
                     academicGroup[i] = group;
                     i++;
                 }

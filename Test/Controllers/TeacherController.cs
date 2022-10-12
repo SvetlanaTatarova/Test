@@ -12,10 +12,9 @@ namespace Test.Controllers
 {
     public class TeacherController : Controller
     {
+
         private readonly ITeacher _teacher;
         private readonly IAcademicGroup _group;
-       
-
         public TeacherController(ITeacher teacher, IAcademicGroup group)
         {
             _teacher = teacher;
@@ -28,68 +27,42 @@ namespace Test.Controllers
             if (id != null)
             {
                 ViewBag.Title = "Информация о преподавателе";
-                Teacher teacher = _teacher.GetOneTeacher(id);
+
+                TeacherViewModel teacherViewModel = (TeacherViewModel)_teacher.GetOneTeacher(id);
 
                 int n = 0;
                 foreach (AcademicGroup group in _group.GetAcademicGroup().ToList())
                 {
-                    if (group.CuratorId == teacher.Id)
+                    if (group.CuratorId == teacherViewModel.Id)
                     {
                         n++;
                     }
                 }
                 int i = 0;
-                AcademicGroupViewModel[] academicGroupViews = new AcademicGroupViewModel[n];
-               
+                AcademicGroup[] academicGroup = new AcademicGroup[n];               
                 foreach (var group in _group.GetAcademicGroup().ToList() )
                 {
-                    if (group.CuratorId == teacher.Id)
+                    if (group.CuratorId == teacherViewModel.Id)
                     {
-                        var groupViewModel = new AcademicGroupViewModel
-                        {
-                            Id = group.Id,
-                            Name = group.Name,
-                            ShortName = group.ShortName,
-                            YearOfStudy = group.YearOfStudy,
-                            SpecialityId = group.SpecialityId,
-                            //allSpecialities = Context.Specialities.ToList(),
-                            CourseId = group.CourseId,
-                            //allCourses = Context.Courses.ToList(),
-                            CuratorId = group.CuratorId,
-                            //allTeachers = Context.Teachers.ToList(),
-                            //allStudents = Context.Students.ToList()
-                        };
-                    
-                        if (groupViewModel != null)
-                        {
-                            academicGroupViews[i] = groupViewModel;
-                            i++;
-                        }
+                        academicGroup[i] =group;
+                        i++;
                     }
                 };
 
-                var teacherViewModel = new TeacherViewModel()
-                {
-                    Id = teacher.Id,
-                    Name = teacher.Name,
-                    Position = teacher.Position,
-                    PhoneNumber = teacher.PhoneNumber,
-                    Img = teacher.Img,
-                    Groups = academicGroupViews.ToList(),
-                    //allGroups = _group.GetAcademicGroup.ToList()
-                };
+                teacherViewModel.Groups = academicGroup.ToList();
+
                 return View(teacherViewModel);
             }
             return NotFound();
         }
-
-
+        
+        
+        
         public IActionResult CreateTeacher()
         {
             ViewBag.Title = "Добавление преподавателя";
             return View();
         }
-
         [HttpPost]
         public IActionResult CreateTeacher(TeacherViewModel model)
         {
@@ -97,13 +70,7 @@ namespace Test.Controllers
             {
                 if (model != null)
                 {
-                    var newTeacher = new Teacher()
-                    {
-                        Name = model.Name,
-                        PhoneNumber = model.PhoneNumber,
-                        Position = model.Position,
-                        Img = model.Img
-                    };
+                    Teacher newTeacher = (Teacher)model;
                     var teacher = _teacher.CreateTeacherPost(newTeacher, model.Photo);
                     return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
                 }
@@ -111,7 +78,8 @@ namespace Test.Controllers
             }
             return View();
         }
-
+        
+        
         
         public IActionResult DeleteTeacher(int? id)
         {
@@ -134,32 +102,24 @@ namespace Test.Controllers
             }
             return NotFound();
         }
-
         [HttpPost]
         public IActionResult DeleteTeacher()
         {
-            return Redirect("/Home/TeacherList");
+            return View();
         }
+        
+        
         
         public IActionResult EditTeacher(int? id)
         {
             if (id != null)
             {
                 ViewBag.Title = "Редактирование информации о преподавателе";
-                Teacher teacher = _teacher.GetOneTeacher(id);
-                var teacherViewModel = new TeacherViewModel()
-                {
-                    Id = teacher.Id,
-                    Name = teacher.Name,
-                    Position = teacher.Position,
-                    PhoneNumber = teacher.PhoneNumber,
-                    Img = teacher.Img
-                };
+                TeacherViewModel teacherViewModel = (TeacherViewModel)_teacher.GetOneTeacher(id);
                 return View(teacherViewModel);
             }
             return NotFound();
         }
-       
         [HttpPost]
         public IActionResult EditTeacher(TeacherViewModel model)
         {
@@ -167,14 +127,7 @@ namespace Test.Controllers
             {
                 if (model != null)
                 {
-                    var upTeacher = new Teacher()
-                    {
-                        Id = model.Id,
-                        Name = model.Name,
-                        PhoneNumber = model.PhoneNumber,
-                        Position = model.Position,
-                        Img = model.Img
-                    };
+                    Teacher upTeacher = (Teacher)model;
                     var teacher = _teacher.EditTeacherPost(upTeacher, model.Photo);
                     return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
                 }
@@ -182,5 +135,6 @@ namespace Test.Controllers
             }
             return View();
         }
+
     }
 }
