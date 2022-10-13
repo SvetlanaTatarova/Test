@@ -22,9 +22,29 @@ namespace Test.Data.Repository
             this.Context = Context;
             this.hostingEnvironment = hostingEnvironment;
         }
-        
-        
-        public IEnumerable<Student> GetStudent => Context.Students.OrderBy(p => p.Name);
+
+
+        //public IEnumerable<Student> GetStudent => Context.Students.OrderBy(p => p.Name);
+
+        public IEnumerable<Student> GetStudent()
+        {
+            int n = 0;
+            foreach (Student student in Context.Students)
+            { n++; }
+            int i = 0;
+            Student[] students = new Student[n];
+            foreach (Student student in Context.Students.OrderBy(p => p.Name))
+            {
+                if (student != null)
+                {
+                    student.Group = Context.Groups.FirstOrDefault(p => p.Id == student.GroupId);
+                    students[i] = student;
+                    i++;
+                }
+            }
+
+            return new List<Student>(students);
+        }
 
 
         public Student GetOneStudent(int? id)

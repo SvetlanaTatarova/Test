@@ -10,9 +10,9 @@ namespace Test.Data.Interfase
 {
     public interface IStudent
     {
-        IEnumerable<Student> GetStudent { get; }
+        //IEnumerable<Student> GetStudent { get; }
 
-        //IEnumerable<Student> GetStudent();
+        IEnumerable<Student> GetStudent();
 
         Student GetOneStudent(int? id);
 

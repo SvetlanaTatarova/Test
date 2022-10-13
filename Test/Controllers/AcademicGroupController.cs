@@ -36,7 +36,7 @@ namespace Test.Controllers
                 AcademicGroupViewModel groupViewModel = (AcademicGroupViewModel)_group.GetOneGroup(id);
                 
                 int n = 0;
-                foreach (Student student in _student.GetStudent)
+                foreach (Student student in _student.GetStudent())
                 {
                     if (student.GroupId == groupViewModel.Id)
                     {
@@ -45,7 +45,7 @@ namespace Test.Controllers
                 }
                 int i = 0;
                 Student[] studentViews = new Student[n];
-                foreach (var student in _student.GetStudent)
+                foreach (var student in _student.GetStudent())
                 {
                     if (student.GroupId == groupViewModel.Id)
                     {
@@ -131,7 +131,7 @@ namespace Test.Controllers
                 AcademicGroup group = _group.GetOneGroup(id);
                 if (group != null)
                 {
-                    foreach (Student student in _student.GetStudent)
+                    foreach (Student student in _student.GetStudent())
                     {
                         if (student.GroupId == group.Id)
                         {

@@ -18,6 +18,6 @@ namespace Test.Models
 
         public int GroupId { get; set; } // Id группы, в которой обучается студент
         public AcademicGroup Group { get; set; }
-        public List<AcademicGroup> Groups { get; set; }
+        //public List<AcademicGroup> Groups { get; set; }
     }
 }

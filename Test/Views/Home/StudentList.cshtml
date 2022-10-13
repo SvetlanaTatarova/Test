@@ -1,4 +1,5 @@
-﻿@model Test.ViewModels.HomeViewModel
+﻿@*model Test.ViewModels.HomeViewModel*@
+@model Test.ViewModels.StudentViewModel[]
 
 <div class="mt-5 md-2">
     <center><h1>Обучающиеся студенты</h1></center>
@@ -13,7 +14,7 @@
 
 <div class="row">
     @{
-        foreach (var student in Model.allStudents)
+        foreach (var student in Model)
         {
         <div class=" col-6 mt-4">
             @{
@@ -24,18 +25,17 @@
 
                 <p style="font-size:25px"><strong>@student.Name</strong></p>
 
-                foreach (var group in Model.allGroups)
-                    if (student.GroupId == group.Id)
-                    {<p style="font-size:22px">Номер группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>}
+                <p style="font-size:22px">Номер группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@student.Group.Id"> @student.Group.Name (@student.Group.ShortName)</a></p>
 
-                if(student.PhoneNumber != null)
+                if (student.PhoneNumber != null)
                 {<p style="font-size:22px">Номер телефона: @student.PhoneNumber</p>}
-                else {<p style="font-size:22px">Номер телефона: - </p>}
-            
-                }
+            else
+            {<p style="font-size:22px">Номер телефона: - </p>}
+
+            }
             <a class="btn btn-outline-success btn-lg" asp-action="EditStudent" asp-controller="Student" asp-route-id="@student.Id">Изменить</a>
             <a class="btn btn-outline-danger btn-lg" asp-action="DeleteStudent" asp-controller="Student" asp-route-id="@student.Id">Удалить</a>
-            
+
         </div>
         }
     }

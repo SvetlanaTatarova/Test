@@ -40,7 +40,7 @@ namespace Test.ViewModels
                 Position = teacher.Position,
                 PhoneNumber = teacher.PhoneNumber,
                 Img = teacher.Img,
-                Groups = teacher.Groups
+                //Groups = teacher.Groups
             };
             return teacherViewModel;
         }

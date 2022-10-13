@@ -38,7 +38,7 @@ namespace Test.ViewModels
                 Img = student.Img,
                 GroupId = student.GroupId,
                 Group = student.Group,
-                Groups = student.Groups
+               // Groups = student.Groups
             };
             return studentViewModel;
         }

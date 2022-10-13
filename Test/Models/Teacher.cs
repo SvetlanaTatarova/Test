@@ -20,6 +20,6 @@ namespace Test.Models
         public string PhoneNumber { get; set; } // Контактный номер телефона преподавателя
         public string Img { get; set; } // Фотография преподавателя
 
-        public List<AcademicGroup> Groups { get; set; }
+        //public List<AcademicGroup> Groups { get; set; }
     }
 }
