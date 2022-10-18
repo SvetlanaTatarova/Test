@@ -24,7 +24,7 @@ namespace Test.ViewModels
 
 
         public IFormFile Photo { get; set; }
-        public List<AcademicGroup> Groups { get; set; }
+        public List<AcademicGroupViewModel> Groups { get; set; }
 
 
         //public static implicit operator StudentViewModel(Student student)

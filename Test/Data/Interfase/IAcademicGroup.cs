@@ -13,6 +13,8 @@ namespace Test.Data.Interfase
 
         IEnumerable<AcademicGroup> GetAcademicGroup();
 
+        IEnumerable<AcademicGroup> GetAcademicGroupByTecherId(int id);
+
         AcademicGroup GetOneGroup(int? id);
 
         // Удаление группы

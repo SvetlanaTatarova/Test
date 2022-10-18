@@ -127,7 +127,7 @@ namespace Test.Controllers
                 }
 
                 TeacherViewModel TeacherViewModel = (TeacherViewModel)teacher;
-                TeacherViewModel.Groups = academicGroup.ToList();
+                TeacherViewModel.Groups = new List<AcademicGroupViewModel>();//academicGroup.ToList();
                 TeacherView[i] = TeacherViewModel;
                 i++;
             }

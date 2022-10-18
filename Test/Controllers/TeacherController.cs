@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Test.Data.Interfase;
 using Test.Models;
 using Test.ViewModels;
-using Xceed.Wpf.Toolkit;
 
 namespace Test.Controllers
 {
@@ -28,36 +27,60 @@ namespace Test.Controllers
             {
                 ViewBag.Title = "Информация о преподавателе";
 
-                TeacherViewModel teacherViewModel = (TeacherViewModel)_teacher.GetOneTeacher(id);
+                //TeacherViewModel teacherViewModel = (TeacherViewModel)_teacher.GetOneTeacher(id);
 
-                int n = 0;
-                foreach (AcademicGroup group in _group.GetAcademicGroup().ToList())
+                var teacher = _teacher.GetOneTeacher(id);
+
+                var teacherViewModel = new TeacherViewModel();
+                teacherViewModel.Position = teacher.Position;
+                teacherViewModel.Name = teacher.Name;
+                teacherViewModel.PhoneNumber = teacher.PhoneNumber;
+                teacherViewModel.Img = teacher.Img;
+                teacherViewModel.Groups = new List<AcademicGroupViewModel>();
+
+                var groups = _group.GetAcademicGroupByTecherId(id.Value);
+
+                foreach (var group in groups)
                 {
-                    if (group.CuratorId == teacherViewModel.Id)
-                    {
-                        n++;
-                    }
+                    var groupViewModel = new AcademicGroupViewModel();
+                    groupViewModel.Name = group.Name;
+                    groupViewModel.ShortName = group.ShortName;
+                    groupViewModel.YearOfStudy = group.YearOfStudy;
+                    groupViewModel.CourseId = group.CourseId;
+                    groupViewModel.SpecialityId = group.SpecialityId;
+                    groupViewModel.CuratorId = group.CuratorId;
+
+                    teacherViewModel.Groups.Add(groupViewModel);
                 }
-                int i = 0;
-                AcademicGroup[] academicGroup = new AcademicGroup[n];               
-                foreach (var group in _group.GetAcademicGroup().ToList() )
-                {
-                    if (group.CuratorId == teacherViewModel.Id)
-                    {
-                        academicGroup[i] =group;
-                        i++;
-                    }
-                };
 
-                teacherViewModel.Groups = academicGroup.ToList();
+                //int n = 0;
+                //foreach (AcademicGroup group in _group.GetAcademicGroup().ToList())
+                //{
+                //    if (group.CuratorId == teacherViewModel.Id)
+                //    {
+                //        n++;
+                //    }
+                //}
+                //int i = 0;
+                //AcademicGroup[] academicGroup = new AcademicGroup[n];               
+                //foreach (var group in _group.GetAcademicGroup().ToList() )
+                //{
+                //    if (group.CuratorId == teacherViewModel.Id)
+                //    {
+                //        academicGroup[i] =group;
+                //        i++;
+                //    }
+                //};
+
+                //teacherViewModel.Groups = academicGroup.ToList();
 
                 return View(teacherViewModel);
             }
             return NotFound();
         }
-        
-        
-        
+
+
+
         public IActionResult CreateTeacher()
         {
             ViewBag.Title = "Добавление преподавателя";
@@ -78,9 +101,9 @@ namespace Test.Controllers
             }
             return View();
         }
-        
-        
-        
+
+
+
         public IActionResult DeleteTeacher(int? id)
         {
             if (id != null)
@@ -94,7 +117,7 @@ namespace Test.Controllers
                         _teacher.Delete(teacher);
                         return Redirect("/Home/TeacherList");
                     }
-                    else 
+                    else
                     {
                         return View();
                     }
@@ -107,9 +130,9 @@ namespace Test.Controllers
         {
             return View();
         }
-        
-        
-        
+
+
+
         public IActionResult EditTeacher(int? id)
         {
             if (id != null)

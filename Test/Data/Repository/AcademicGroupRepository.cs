@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,11 +14,11 @@ namespace Test.Data.Repository
 {
     public class AcademicGroupRepository : IAcademicGroup
     {
-        private readonly ApplicationContext Context;
+        private readonly ApplicationContext _context;
 
         public AcademicGroupRepository(ApplicationContext Context)
         {
-            this.Context = Context;
+            _context = Context;
         }
 
        // public IEnumerable<AcademicGroup> GetAcademicGroup => Context.Groups.OrderBy(p => p.ShortName);
@@ -25,19 +26,19 @@ namespace Test.Data.Repository
         public IEnumerable<AcademicGroup> GetAcademicGroup()
         {
             int n = 0;
-            foreach (AcademicGroup group in Context.Groups)
+            foreach (AcademicGroup group in _context.Groups)
             { n++; }
             int i = 0;
             AcademicGroup[] academicGroup = new AcademicGroup[n];
-            foreach (AcademicGroup group in Context.Groups.OrderBy(p => p.ShortName))
+            foreach (AcademicGroup group in _context.Groups.OrderBy(p => p.ShortName))
             {
                 if (group != null)
                 {
-                    group.Speciality = Context.Specialities.FirstOrDefault(p => p.Id == group.SpecialityId);
+                    group.Speciality = _context.Specialities.FirstOrDefault(p => p.Id == group.SpecialityId);
                     //group.Specialities = Context.Specialities.ToList();
-                    group.Course = Context.Courses.FirstOrDefault(p => p.Id == group.CourseId);
+                    group.Course = _context.Courses.FirstOrDefault(p => p.Id == group.CourseId);
                     //group.Courses = Context.Courses.ToList();
-                    group.Curator = Context.Teachers.FirstOrDefault(p => p.Id == group.CuratorId);
+                    group.Curator = _context.Teachers.FirstOrDefault(p => p.Id == group.CuratorId);
                     //group.Teachers = Context.Teachers.ToList();
                     //group.Students = Context.Students.ToList();
                     academicGroup[i] = group;
@@ -49,36 +50,44 @@ namespace Test.Data.Repository
         }
 
 
+        public IEnumerable<AcademicGroup> GetAcademicGroupByTecherId(int id)
+        {
+            
+            var groups = _context.Groups.Include(_=>_.Speciality).Include(_=>_.Course).Include(_=>_.Curator).Where(_=>_.CuratorId == id);
+           
+            return groups;
+        }
+
         public AcademicGroup GetOneGroup(int? id)
         {
-            AcademicGroup group = Context.Groups.FirstOrDefault(p => p.Id == id);
-            group.Speciality = Context.Specialities.FirstOrDefault(p => p.Id == group.SpecialityId);
-            group.Course = Context.Courses.FirstOrDefault(p => p.Id == group.CourseId);
-            group.Curator = Context.Teachers.FirstOrDefault(p => p.Id == group.CuratorId);
+            AcademicGroup group = _context.Groups.FirstOrDefault(p => p.Id == id);
+            group.Speciality = _context.Specialities.FirstOrDefault(p => p.Id == group.SpecialityId);
+            group.Course = _context.Courses.FirstOrDefault(p => p.Id == group.CourseId);
+            group.Curator = _context.Teachers.FirstOrDefault(p => p.Id == group.CuratorId);
             return group;
         }
         
         
         public AcademicGroup CreateGroupPost(AcademicGroup group)
         {
-            Context.Groups.Add(group);
-            Context.SaveChanges();
+            _context.Groups.Add(group);
+            _context.SaveChanges();
             return group;
         }
         
 
         public AcademicGroup Delete(AcademicGroup group)
         {
-            Context.Groups.Remove(group);
-            Context.SaveChanges();
+            _context.Groups.Remove(group);
+            _context.SaveChanges();
             return group;
         }
         
         
         public AcademicGroup EditGroupPost(AcademicGroup group)
         {
-            Context.Groups.Update(group);
-            Context.SaveChanges();
+            _context.Groups.Update(group);
+            _context.SaveChanges();
             return group;
         }
 

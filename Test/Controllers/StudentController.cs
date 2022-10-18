@@ -20,9 +20,9 @@ namespace Test.Controllers
             _student = student;
             _group = group;
         }
-        
-        
-        
+
+
+
         public IActionResult DetailsStudent(int? id)
         {
             if (id != null)
@@ -33,9 +33,9 @@ namespace Test.Controllers
             }
             return NotFound();
         }
-        
-        
-        
+
+
+
         public IActionResult CreateStudent()
         {
             ViewBag.Title = "Добавление студента";
@@ -51,15 +51,15 @@ namespace Test.Controllers
             foreach (var group in _group.GetAcademicGroup().ToList())
             {
                 if (group != null)
-                    {
-                        academicGroup[i] = group;
-                        i++;
-                    }
+                {
+                    academicGroup[i] = group;
+                    i++;
+                }
             };
 
             var student = new StudentViewModel()
             {
-                Groups = academicGroup.ToList()
+                Groups = new List<AcademicGroupViewModel>()//academicGroup.ToList()
             };
             //return View();
             return View(student);
@@ -80,9 +80,9 @@ namespace Test.Controllers
             //return View();
             return RedirectToAction("CreateStudent", "Student", new { model });
         }
-        
-        
-        
+
+
+
         public IActionResult DeleteStudent(int? id)
         {
             if (id != null)
@@ -96,9 +96,9 @@ namespace Test.Controllers
             }
             return NotFound();
         }
-        
-        
-        
+
+
+
         public IActionResult DeleteGroupStudent(int? id)
         {
             if (id != null)
@@ -113,9 +113,9 @@ namespace Test.Controllers
             }
             return NotFound();
         }
-        
-        
-        
+
+
+
         public IActionResult EditStudent(int? id)
         {
             if (id != null)
@@ -141,7 +141,25 @@ namespace Test.Controllers
                 //};
 
                 StudentViewModel studentViewModel = (StudentViewModel)student;
-                studentViewModel.Groups = _group.GetAcademicGroup().ToList();
+
+                studentViewModel.Groups = new List<AcademicGroupViewModel>();
+                //studentViewModel.Groups = _group.GetAcademicGroup().ToList();
+                var groups = _group.GetAcademicGroup();
+                foreach (var group in groups)
+                {
+
+                    var groupViewModel = new AcademicGroupViewModel();
+                    groupViewModel.Name = group.Name;
+                    groupViewModel.ShortName = group.ShortName;
+                    groupViewModel.YearOfStudy = group.YearOfStudy;
+                    groupViewModel.CourseId = group.CourseId;
+                    groupViewModel.SpecialityId = group.SpecialityId;
+                    groupViewModel.CuratorId = group.CuratorId;
+                    groupViewModel.Id = group.Id;
+                    studentViewModel.Groups.Add(groupViewModel);
+
+                }
+
                 return View(studentViewModel);
             }
             return NotFound();
@@ -164,7 +182,7 @@ namespace Test.Controllers
         }
     }
 
-   
+
 
 
 }
