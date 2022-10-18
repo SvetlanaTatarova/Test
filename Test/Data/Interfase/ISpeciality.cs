@@ -9,5 +9,7 @@ namespace Test.Data.Interfase
     public interface ISpeciality
     {
         IEnumerable<Speciality> GetSpeciality { get; }
+
+        Speciality GetOneSpeciality(int? id);
     }
 }

@@ -30,35 +30,95 @@ namespace Test.Controllers
 
         public ViewResult Index()
         {
-            var homeViewModel = new HomeViewModel()
+            var SpecialityViewModelList = new List<SpecialityViewModel>();
+            var specialities = _speciality.GetSpeciality;
+            foreach (Speciality speciality in specialities)
             {
-                allGroups = _group.GetAcademicGroup().ToList(),
-                allSpecialities = _speciality.GetSpeciality.ToList()
-            };
+                var specialityViewModel = new SpecialityViewModel
+                {
+                    Id = speciality.Id,
+                    Name = speciality.Name,                    
+                    Groups = new List<AcademicGroupViewModel>()
+                };
+
+                var groups = _group.GetAcademicGroupBySpecialityId(specialityViewModel.Id);
+                foreach (var group in groups)
+                {
+                    var groupViewModel = new AcademicGroupViewModel
+                    {
+                        Id = group.Id,
+                        Name = group.Name,
+                        ShortName = group.ShortName
+                    };
+
+                    specialityViewModel.Groups.Add(groupViewModel);
+                }
+
+                SpecialityViewModelList.Add(specialityViewModel);
+            }
             ViewBag.Title = "Группы";
-            return View(homeViewModel);
+            return View(SpecialityViewModelList);
         }
+
+
 
         public IActionResult StudentList()
         {
-            var homeViewModel = new HomeViewModel()
+            var StudentViewModelList = new List<StudentViewModel>();
+            var students = _student.GetStudent;
+            foreach (Student student in students)
             {
-                allGroups = _group.GetAcademicGroup().ToList(),
-                allStudents = _student.GetStudent.ToList()
-            };
+                var studentViewModel = new StudentViewModel
+                {
+                    Id = student.Id,
+                    Name = student.Name,
+                    PhoneNumber = student.PhoneNumber,
+                    Img = student.Img,
+                    GroupId = student.GroupId,
+                    Group = _group.GetOneGroup(student.GroupId)
+                };
+
+                StudentViewModelList.Add(studentViewModel);
+            }
+
             ViewBag.Title = "Студенты";
-            return View(homeViewModel);
+            return View(StudentViewModelList);
         }
 
         public IActionResult TeacherList()
         {
-            var homeViewModel = new HomeViewModel()
+            var TeacherViewModelList = new List<TeacherViewModel>();
+            var teachers = _teacher.GetTeacher;
+            foreach (Teacher teacher in teachers)
             {
-                allGroups = _group.GetAcademicGroup().ToList(),
-                allTeachers = _teacher.GetTeacher.ToList()
-            };
+                var teacherViewModel = new TeacherViewModel
+                {
+                    Id = teacher.Id,
+                    Name = teacher.Name,
+                    PhoneNumber = teacher.PhoneNumber,
+                    Position = teacher.Position,
+                    Img = teacher.Img,
+                    Groups = new List<AcademicGroupViewModel>()
+                };
+
+                var groups = _group.GetAcademicGroupByTecherId(teacherViewModel.Id);
+                foreach (var group in groups)
+                {
+                    var groupViewModel = new AcademicGroupViewModel
+                    {
+                        Id = group.Id,
+                        Name = group.Name,
+                        ShortName = group.ShortName
+                    };
+
+                    teacherViewModel.Groups.Add(groupViewModel);
+                }
+
+                TeacherViewModelList.Add(teacherViewModel);
+            }
+
             ViewBag.Title = "Преподаватели";
-            return View(homeViewModel);
+            return View(TeacherViewModelList);
         }
 
     }

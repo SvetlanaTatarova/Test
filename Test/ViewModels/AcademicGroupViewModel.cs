@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Test.Models;
@@ -8,9 +9,9 @@ namespace Test.ViewModels
 {
     public class AcademicGroupViewModel: AcademicGroup
     {
-        public List<Teacher> allTeachers { get; set; }
-        public List<Course> allCourses { get; set; }
-        public List<Speciality> allSpecialities { get; set; }
-        public List<Student> allStudents { get; set; }
+        public List<CourseViewModel> Courses { get; set; }
+        public List<SpecialityViewModel> Specialities { get; set; }
+        public List<TeacherViewModel> Teachers { get; set; }
+        public List<StudentViewModel> Students { get; set; }
     }
 }

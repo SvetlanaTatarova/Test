@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Test.Models.InitializeDB;
 
 namespace Test.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20221012175511_IsAllCourseToCourseAdded")]
+    partial class IsAllCourseToCourseAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -45,9 +47,6 @@ namespace Test.Migrations
                     b.Property<int>("SpecialityId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("StudentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("YearOfStudy")
                         .HasColumnType("int");
 
@@ -59,8 +58,6 @@ namespace Test.Migrations
 
                     b.HasIndex("SpecialityId");
 
-                    b.HasIndex("StudentId");
-
                     b.ToTable("Groups");
                 });
 
@@ -71,10 +68,15 @@ namespace Test.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AcademicGroupId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CourseNumber")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AcademicGroupId");
 
                     b.ToTable("Courses");
                 });
@@ -159,7 +161,7 @@ namespace Test.Migrations
                         .IsRequired();
 
                     b.HasOne("Test.Models.Teacher", "Curator")
-                        .WithMany("Groups")
+                        .WithMany()
                         .HasForeignKey("CuratorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -170,15 +172,18 @@ namespace Test.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Test.Models.Student", null)
-                        .WithMany("Groups")
-                        .HasForeignKey("StudentId");
-
                     b.Navigation("Course");
 
                     b.Navigation("Curator");
 
                     b.Navigation("Speciality");
+                });
+
+            modelBuilder.Entity("Test.Models.Course", b =>
+                {
+                    b.HasOne("Test.Models.AcademicGroup", null)
+                        .WithMany("AllCourse")
+                        .HasForeignKey("AcademicGroupId");
                 });
 
             modelBuilder.Entity("Test.Models.Student", b =>
@@ -192,14 +197,9 @@ namespace Test.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("Test.Models.Student", b =>
+            modelBuilder.Entity("Test.Models.AcademicGroup", b =>
                 {
-                    b.Navigation("Groups");
-                });
-
-            modelBuilder.Entity("Test.Models.Teacher", b =>
-                {
-                    b.Navigation("Groups");
+                    b.Navigation("AllCourse");
                 });
 #pragma warning restore 612, 618
         }

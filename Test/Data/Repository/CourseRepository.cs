@@ -21,5 +21,11 @@ namespace Test.Data.Repository
         
         
         public IEnumerable<Course> GetCourse => Context.Courses.OrderBy(p => p.CourseNumber);
+
+        public Course GetOneCourse(int? id)
+        {
+            Course course = Context.Courses.FirstOrDefault(p => p.Id == id);
+            return course;
+        }
     }
 }

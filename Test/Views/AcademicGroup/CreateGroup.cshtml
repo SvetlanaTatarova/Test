@@ -23,20 +23,20 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="allCourses">Выберите курс обучения группы:</label>
-        <select asp-for="CourseId" asp-items="@Model.allCourses.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.CourseNumber.ToString() })">           
+        <label asp-for="Courses">Выберите курс обучения группы:</label>
+        <select asp-for="CourseId" asp-items="@Model.Courses.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.CourseNumber.ToString() })">           
         </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="allSpecialities">Выберите специальность обучения группы:</label>
-        <select asp-for="SpecialityId" asp-items="@Model.allSpecialities.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name })">
+        <label asp-for="Specialities">Выберите специальность обучения группы:</label>
+        <select asp-for="SpecialityId" asp-items="@Model.Specialities.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name })">
         </select>
     </div>
 
     <div class="form-group">
-        <label asp-for="allTeachers">Выберите куратора группы:</label>
-        <select asp-for="CuratorId" asp-items="@Model.allTeachers.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name })">
+        <label asp-for="Teachers">Выберите куратора группы:</label>
+        <select asp-for="CuratorId" asp-items="@Model.Teachers.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name })">
         </select>
     </div>
 

@@ -15,12 +15,12 @@ namespace Test.Controllers
     {
         private readonly IStudent _student;
         private readonly IAcademicGroup _group;
-
         public StudentController(IStudent student, IAcademicGroup group)
         {
             _student = student;
             _group = group;
         }
+
 
 
         public IActionResult DetailsStudent(int? id)
@@ -29,30 +29,50 @@ namespace Test.Controllers
             {
                 ViewBag.Title = "Информация о студенте";
                 Student student = _student.GetOneStudent(id);
-                var studentViewModel = new StudentViewModel()
+                var studentViewModel = new StudentViewModel
                 {
                     Id = student.Id,
                     Name = student.Name,
                     PhoneNumber = student.PhoneNumber,
                     Img = student.Img,
                     GroupId = student.GroupId,
-                    allGroups = _group.GetAcademicGroup().ToList()
+                    Group = student.Group
                 };
                 return View(studentViewModel);
             }
             return NotFound();
         }
 
+
+
         public IActionResult CreateStudent()
         {
             ViewBag.Title = "Добавление студента";
-            var student = new StudentViewModel()
-            {
-                allGroups = _group.GetAcademicGroup().ToList()
-            };
-            return View(student);
-        }
 
+            var studentViewModel = new StudentViewModel
+            {
+                Groups = new List<AcademicGroupViewModel>()
+            };
+
+            var groups = _group.GetAcademicGroup;
+            foreach (var group in groups)
+            {
+
+                var groupViewModel = new AcademicGroupViewModel
+                {
+                    Id = group.Id,
+                    Name = group.Name,
+                    ShortName = group.ShortName,
+                    YearOfStudy = group.YearOfStudy,
+                    CourseId = group.CourseId,
+                    SpecialityId = group.SpecialityId,
+                    CuratorId = group.CuratorId
+                };
+                studentViewModel.Groups.Add(groupViewModel);
+            }
+
+            return View(studentViewModel);
+        }
         [HttpPost]
         public IActionResult CreateStudent(StudentViewModel model)
         {
@@ -60,22 +80,47 @@ namespace Test.Controllers
             {
                 if (model != null)
                 {
-                    var newStudent = new Student()
+                    var newStudent = new Student
                     {
                         Name = model.Name,
                         PhoneNumber = model.PhoneNumber,
-                        GroupId = model.GroupId,
-                        Img = model.Img
+                        Img = model.Img,
+                        GroupId = model.GroupId
                     };
-
                     var student = _student.CreateStudentPost(newStudent, model.Photo);
                     return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
                 }
                 return NotFound();
             }
-           // return View();
-            return RedirectToAction("CreateStudent", "Student", new { model });
+            else
+            {
+                ViewBag.Title = "Добавление студента";
+
+                var studentViewModel = new StudentViewModel
+                {
+                    Groups = new List<AcademicGroupViewModel>()
+                };
+
+                var groups = _group.GetAcademicGroup;
+                foreach (var group in groups)
+                {
+
+                    var groupViewModel = new AcademicGroupViewModel
+                    {
+                        Id = group.Id,
+                        Name = group.Name,
+                        ShortName = group.ShortName,
+                        YearOfStudy = group.YearOfStudy,
+                        CourseId = group.CourseId,
+                        SpecialityId = group.SpecialityId,
+                        CuratorId = group.CuratorId
+                    };
+                    studentViewModel.Groups.Add(groupViewModel);
+                }
+                return View(studentViewModel);
+            }
         }
+
 
 
         public IActionResult DeleteStudent(int? id)
@@ -91,6 +136,8 @@ namespace Test.Controllers
             }
             return NotFound();
         }
+
+
 
         public IActionResult DeleteGroupStudent(int? id)
         {
@@ -108,26 +155,45 @@ namespace Test.Controllers
         }
 
 
+
         public IActionResult EditStudent(int? id)
         {
             if (id != null)
             {
                 ViewBag.Title = "Редактирование информации о студенте";
                 Student student = _student.GetOneStudent(id);
-                var studentViewModel = new StudentViewModel()
+                
+                var studentViewModel = new StudentViewModel
                 {
                     Id = student.Id,
                     Name = student.Name,
-                    PhoneNumber = student.PhoneNumber,
                     Img = student.Img,
+                    PhoneNumber = student.PhoneNumber,
                     GroupId = student.GroupId,
-                    allGroups = _group.GetAcademicGroup().ToList()
+                    Groups = new List<AcademicGroupViewModel>()
                 };
+
+                var groups = _group.GetAcademicGroup;
+                foreach (var group in groups)
+                {
+
+                    var groupViewModel = new AcademicGroupViewModel
+                    {
+                        Id = group.Id,
+                        Name = group.Name,
+                        ShortName = group.ShortName,
+                        YearOfStudy = group.YearOfStudy,
+                        CourseId = group.CourseId,
+                        SpecialityId = group.SpecialityId,
+                        CuratorId = group.CuratorId
+                    };
+                    studentViewModel.Groups.Add(groupViewModel);
+                }
+
                 return View(studentViewModel);
             }
             return NotFound();
         }
-
         [HttpPost]
         public IActionResult EditStudent(StudentViewModel model)
         {
@@ -135,25 +201,59 @@ namespace Test.Controllers
             {
                 if (model != null)
                 {
-                    var upStudent = new Student()
+                    var upStudent = new Student
                     {
                         Id = model.Id,
                         Name = model.Name,
+                        Img = model.Img,
                         PhoneNumber = model.PhoneNumber,
-                        GroupId = model.GroupId,
-                        Img = model.Img
+                        GroupId = model.GroupId
                     };
                     var student = _student.EditStudentPost(upStudent, model.Photo);
                     return RedirectToAction("DetailsStudent", "Student", new { id = student.Id });
                 }
                 return NotFound();
             }
-            //return View();
-            return RedirectToAction("EditStudent", "Student", new { model = model });
+            else
+            {
+                ViewBag.Title = "Редактирование информации о студенте";
+                Student student = _student.GetOneStudent(model.Id);
+
+                var studentViewModel = new StudentViewModel
+                {
+                    Id = student.Id,
+                    Name = student.Name,
+                    Img = student.Img,
+                    PhoneNumber = student.PhoneNumber,
+                    GroupId = student.GroupId,
+                    Groups = new List<AcademicGroupViewModel>()
+                };
+
+                var groups = _group.GetAcademicGroup;
+                foreach (var group in groups)
+                {
+
+                    var groupViewModel = new AcademicGroupViewModel
+                    {
+                        Id = group.Id,
+                        Name = group.Name,
+                        ShortName = group.ShortName,
+                        YearOfStudy = group.YearOfStudy,
+                        CourseId = group.CourseId,
+                        SpecialityId = group.SpecialityId,
+                        CuratorId = group.CuratorId
+                    };
+                    studentViewModel.Groups.Add(groupViewModel);
+                }
+
+                return View(studentViewModel);
+            }
         }
+           
+        
     }
 
-   
+
 
 
 }

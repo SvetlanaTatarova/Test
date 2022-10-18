@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,17 +23,26 @@ namespace Test.Data.Repository
             this.Context = Context;
             this.hostingEnvironment = hostingEnvironment;
         }
-        
-        
+
+
         public IEnumerable<Student> GetStudent => Context.Students.OrderBy(p => p.Name);
 
 
         public Student GetOneStudent(int? id)
         {
             Student student = Context.Students.FirstOrDefault(p => p.Id == id);
+            student.Group = Context.Groups.FirstOrDefault(p => p.Id == student.GroupId);
             return student;
         }
-        
+
+
+        public IEnumerable<Student> GetStudentByGroupId(int? id)
+        {
+            var students = Context.Students.Include(_ => _.Group).Where(_ => _.GroupId == id);
+
+            return students.OrderBy(p => p.Name);
+        }
+
 
         public Student CreateStudentPost(Student student, IFormFile photo)
         {

@@ -1,4 +1,5 @@
-﻿@model Test.ViewModels.HomeViewModel
+﻿<!--model Test.ViewModels.HomeViewModel-->
+@model List<Test.ViewModels.SpecialityViewModel>
 
 <div>
     <center><h1>Академические группы</h1></center>
@@ -18,20 +19,17 @@
 
 <div class="row">
     @{
-        foreach (var speciality in Model.allSpecialities)
+        foreach (var speciality in Model)
         {
             <div class=" col-12 mt-4">
                 <p class="dline" align="justify" style="font-size:33px">@speciality.Name</p>
             </div>
 
-            foreach (var group in Model.allGroups)
+            foreach (var group in speciality.Groups)
             {
-                if (speciality.Id == group.SpecialityId)
-                {
-                    <div class=" col-lg-3">
-                        <p> <a class="btn btn-warning border-0  badge-secondary w-50" style="font-size: 23px; opacity: 0.6;" asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id" title="Подробнее">@group.ShortName</a></p>
-                    </div>
-                }
+                <div class=" col-lg-3">
+                    <p> <a class="btn btn-warning border-0  badge-secondary w-50" style="font-size: 23px; opacity: 0.6;" asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id" title="Подробнее">@group.ShortName</a></p>
+                </div>
             }
         }
     }

@@ -9,5 +9,7 @@ namespace Test.Data.Interfase
     public interface ICourse
     {
         IEnumerable<Course> GetCourse { get; }
+
+        Course GetOneCourse(int? id);
     }
 }

@@ -9,7 +9,11 @@ namespace Test.Data.Interfase
 {
      public interface IAcademicGroup
     {
-        IEnumerable<AcademicGroup> GetAcademicGroup();
+        IEnumerable<AcademicGroup> GetAcademicGroup { get; }
+
+        IEnumerable<AcademicGroup> GetAcademicGroupByTecherId(int id);
+
+        IEnumerable<AcademicGroup> GetAcademicGroupBySpecialityId(int id);
 
         AcademicGroup GetOneGroup(int? id);
 

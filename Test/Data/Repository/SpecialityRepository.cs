@@ -20,5 +20,11 @@ namespace Test.Data.Repository
 
 
         public IEnumerable<Speciality> GetSpeciality => Context.Specialities.OrderBy(p => p.Name);
+
+        public Speciality GetOneSpeciality(int? id)
+        {
+            Speciality speciality = Context.Specialities.FirstOrDefault(p => p.Id == id);
+            return speciality;
+        }
     }
 }
