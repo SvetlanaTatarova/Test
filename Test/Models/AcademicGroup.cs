@@ -19,15 +19,17 @@ namespace Test.Models
         public string ShortName { get; set; } // Сокращенное название (номер) группы
         public int YearOfStudy { get; set; } // Год начала обучения
 
-
+        [Required(ErrorMessage = "Выберите курс обучения группы!")]
         public int CourseId { get; set; } // Id курса обучения группы
         public Course Course { get; set; }
-       // public List<Course> Courses { get; set; }
+        // public List<Course> Courses { get; set; }
 
+        [Required(ErrorMessage = "Выберите специальность обучения группы!")]
         public int SpecialityId { get; set; } // Id специальности группы
         public Speciality Speciality { get; set; }
-       // public List<Speciality> Specialities { get; set; }
+        // public List<Speciality> Specialities { get; set; }
 
+        [Required(ErrorMessage = "Выберите куратора группы!")]
         public int CuratorId { get; set; } //Id куратора группы
         public Teacher Curator { get; set; }
        // public List<Teacher> Teachers { get; set; }

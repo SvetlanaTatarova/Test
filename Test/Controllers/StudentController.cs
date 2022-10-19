@@ -113,7 +113,7 @@ namespace Test.Controllers
                         YearOfStudy = group.YearOfStudy,
                         CourseId = group.CourseId,
                         SpecialityId = group.SpecialityId,
-                        CuratorId = group.CuratorId
+                        CuratorId = group.CuratorId,
                     };
                     studentViewModel.Groups.Add(groupViewModel);
                 }

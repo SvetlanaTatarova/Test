@@ -14,45 +14,31 @@
 </div>
 
 <div class="row">
-    @{
-        foreach (var teacher in Model)
+    @{ foreach (var teacher in Model)
         {
+            <div class=" col-sm-2 mt-3" style="float: left">
+                @if (teacher.Img != null){<img style="float: left; vertical-align: top; margin: 4px 7px 2px 4px;" src="@teacher.Img" alt="@teacher.Name" width="150" height="200" /> }
+                else{<img style="float:left; margin: 4px 7px 2px 4px;" src="/img/avatar.png" alt="@teacher.Name" width="150" height="200" />}
+            </div>
+            <div class="col-lg-4 mt-3" style="float: right">
+                <p style="font-size:25px"><strong>@teacher.Name</strong></p>
 
-            <div class="col-6 mt-4">
-                @{
-                    if (teacher.Img != null)
-                    {
-                        <img style="float: left; vertical-align: top; margin: 4px 7px 2px 4px;" src="@teacher.Img" alt="@teacher.Name" width="150" height="200" />
-                    }
-                    else
-                    {
-                        <img style="float:left; margin: 4px 7px 2px 4px;" src="/img/avatar.png" alt="@teacher.Name" width="150" height="200" />
-                    }
-                    <p style="font-size:25px"><strong>@teacher.Name</strong></p>
+                <p style="font-size:22px">Должность: @teacher.Position</p>
 
-                    <p style="font-size:22px">Должность: @teacher.Position</p>
+                @if (teacher.PhoneNumber != null)
+                {<p style="font-size:22px">Номер телефона: @teacher.PhoneNumber</p>}
+            else
+            {<p style="font-size:22px">Номер телефона: - </p>}
 
-                    if (teacher.PhoneNumber != null)
-                    {
-                        <p style="font-size:22px">Номер телефона: @teacher.PhoneNumber</p>
-                    }
-                    else
-                    {
-                        <p style="font-size:22px">Номер телефона: - </p>
-                    }
-                    if (teacher.Groups.Any())
-                        foreach (var group in teacher.Groups)
-                        {
-                        //if (teacher.Id == group.CuratorId)
-                        //{
-                            <p align="justify" style="font-size:22px">Куратор группы: <a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>
-                            //}
-                        }
+                <p style="font-size:22px">Куратор группы:</p>
+                @foreach (var group in teacher.Groups)
+                {<p style="font-size:22px"><a asp-action="DetailsGroup" asp-controller="AcademicGroup" asp-route-id="@group.Id"> @group.Name (@group.ShortName)</a></p>}
 
+                <p>
                     <a class="btn btn-outline-success btn-lg" asp-action="EditTeacher" asp-controller="Teacher" asp-route-id="@teacher.Id">Изменить</a>
                     <a class="btn btn-outline-danger btn-lg" asp-action="DeleteTeacher" asp-controller="Teacher" asp-route-id="@teacher.Id" title="ВНИМАНИЕ!!! Перед удалением не забудьте СМЕНИТЬ кураторов групп при необходимости.">Удалить</a>
-                }
+                </p>
             </div>
+            } 
         }
-    }
 </div>

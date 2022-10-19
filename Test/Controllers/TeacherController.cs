@@ -157,8 +157,20 @@ namespace Test.Controllers
                 }
                 return NotFound();
             }
-            ViewBag.Title = "Редактирование информации о преподавателе";
-            return View();
+            else
+            {
+                ViewBag.Title = "Редактирование информации о преподавателе";
+                Teacher teacher = _teacher.GetOneTeacher(model.Id);
+                var teacherViewModel = new TeacherViewModel
+                {
+                    Id = teacher.Id,
+                    Name = teacher.Name,
+                    Position = teacher.Position,
+                    PhoneNumber = teacher.PhoneNumber,
+                    Img = teacher.Img
+                };
+                return View(teacherViewModel);
+            }
         }
 
     }
