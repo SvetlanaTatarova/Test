@@ -146,7 +146,7 @@ namespace Test.Controllers
                 Student student = _student.GetOneStudent(id);
                 if (student != null)
                 {
-                    int gId = student.GroupId;
+                    int? gId = student.GroupId;
                     _student.Delete(student);
                     return RedirectToAction("DetailsGroup", "AcademicGroup", new { id = gId });
                 }

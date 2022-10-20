@@ -22,11 +22,11 @@
             </div>
 
             <div class="form-group ">
-                <label asp-for="GroupId" class="control-label">Выберите группу:</label>
+                <label asp-for="GroupId" class="control-label">Группа обучения:</label>
                 <select asp-for="GroupId" asp-items="@Model.Groups.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name+"("+ _.ShortName+")" })" class="control-label">
-                    <option value="Группа не выбрана">Нет</option>
+                    <option value="">Выберите группу</option>
                 </select>
-                <span asp-validation-for="GroupId" class="text-danger"></span>
+                <p><span asp-validation-for="GroupId" class="text-danger"></span></p>
             </div>
 
             <div class="form-group ">

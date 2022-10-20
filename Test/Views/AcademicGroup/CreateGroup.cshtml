@@ -23,27 +23,27 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="Courses">Выберите курс обучения группы:</label>
+        <label asp-for="Courses">Курс обучения группы:</label>
         <select asp-for="CourseId" asp-items="@Model.Courses.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.CourseNumber.ToString() })">
-            <option value="Курс не выбран">Нет</option>
+            <option value="">Выберите курс обучения</option>
         </select>
-        <span asp-validation-for="CourseId" class="text-danger"></span>
+        <p><span asp-validation-for="CourseId" class="text-danger"></span></p>
     </div>
 
     <div class="form-group">
-        <label asp-for="Specialities">Выберите специальность обучения группы:</label>
+        <label asp-for="Specialities">Специальность обучения группы:</label>
         <select asp-for="SpecialityId" asp-items="@Model.Specialities.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name })">
-            <option value="Специальность не выбрана">Нет</option>
+            <option value="">Выберите специальность</option>
         </select>
-        <span asp-validation-for="SpecialityId" class="text-danger"></span>
+        <p><span asp-validation-for="SpecialityId" class="text-danger"></span></p>
     </div>
 
     <div class="form-group">
-        <label asp-for="Teachers">Выберите куратора группы:</label>
+        <label asp-for="Teachers">Куратор группы:</label>
         <select asp-for="CuratorId" asp-items="@Model.Teachers.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name })">
-            <option value="Куратор не выбран">Нет</option>
+            <option value="">Выберите куратора</option>
         </select>
-        <span asp-validation-for="CuratorId" class="text-danger"></span>
+        <p><span asp-validation-for="CuratorId" class="text-danger"></span></p>
     </div>
 
     <div class="form-group">
