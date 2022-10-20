@@ -36,6 +36,7 @@ namespace Test
             services.AddTransient<ISpeciality,SpecialityRepository>();
             services.AddTransient<ITeacher,TeacherRepository>();
             services.AddTransient<IStudent,StudentRepository>();
+            services.AddTransient<IPosition,PositionRepository>();
             //services.AddMvc();
             services.AddSession();
         }

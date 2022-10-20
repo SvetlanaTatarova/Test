@@ -29,6 +29,7 @@ namespace Test.Data.Repository
         public Teacher GetOneTeacher(int? id)
         {
             Teacher teacher = Context.Teachers.FirstOrDefault(p => p.Id == id);
+            teacher.Position = Context.Positions.FirstOrDefault(p => p.Id == teacher.PositionId);
             return teacher;
         }
 

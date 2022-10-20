@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Test.Models
 {
-    public enum Position
+    public class Position
     {
-        Преподаватель = 1,
-        Старший_преподаватель,
-        Доцент,
-        Профессор
+        public int Id { get; set; }
+        public string Name { get; set; } // Название должности      
     }
 }

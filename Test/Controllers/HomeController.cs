@@ -18,13 +18,15 @@ namespace Test.Controllers
         private readonly ISpeciality _speciality;
         private readonly IStudent _student;
         private readonly ITeacher _teacher;
+        private readonly IPosition _position;
 
-        public HomeController(IAcademicGroup group, ISpeciality speciality, IStudent student, ITeacher teacher)
+        public HomeController(IAcademicGroup group, ISpeciality speciality, IStudent student, ITeacher teacher, IPosition position)
         {
             _group = group;
             _speciality = speciality;
             _student = student;
             _teacher = teacher;
+            _position = position;
         }
 
 
@@ -96,7 +98,8 @@ namespace Test.Controllers
                     Id = teacher.Id,
                     Name = teacher.Name,
                     PhoneNumber = teacher.PhoneNumber,
-                    Position = teacher.Position,
+                    PositionId = teacher.PositionId,
+                    Position = _position.GetOnePosition(teacher.PositionId),
                     Img = teacher.Img,
                     Groups = new List<AcademicGroupViewModel>()
                 };

@@ -15,8 +15,8 @@ namespace Test.Models
         public string Name { get; set; } // ФИО преподавателя
 
         [Required(ErrorMessage = "Введите должность преподавателя!")]
-       // [MaxLength(50)]
-        public Position? Position { get; set; } // Должность преподавателя
+        public int? PositionId { get; set; } // id должности преподавателя
+        public Position Position { get; set; }
         public string PhoneNumber { get; set; } // Контактный номер телефона преподавателя
         public string Img { get; set; } // Фотография преподавателя
 

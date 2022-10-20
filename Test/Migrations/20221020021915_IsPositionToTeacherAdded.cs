@@ -20,6 +20,19 @@ namespace Test.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Positions",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Positions", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Specialities",
                 columns: table => new
                 {
@@ -39,13 +52,19 @@ namespace Test.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Position = table.Column<int>(type: "int", nullable: false),
+                    PositionId = table.Column<int>(type: "int", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Img = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Teachers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Teachers_Positions_PositionId",
+                        column: x => x.PositionId,
+                        principalTable: "Positions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -125,6 +144,11 @@ namespace Test.Migrations
                 name: "IX_Students_GroupId",
                 table: "Students",
                 column: "GroupId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Teachers_PositionId",
+                table: "Teachers",
+                column: "PositionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -143,6 +167,9 @@ namespace Test.Migrations
 
             migrationBuilder.DropTable(
                 name: "Teachers");
+
+            migrationBuilder.DropTable(
+                name: "Positions");
         }
     }
 }

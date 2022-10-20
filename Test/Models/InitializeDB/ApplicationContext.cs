@@ -13,6 +13,7 @@ namespace Test.Models.InitializeDB
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<AcademicGroup> Groups { get; set; }
         public DbSet<Student> Students { get; set; }
+        public DbSet<Position> Positions { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {

@@ -14,10 +14,12 @@ namespace Test.Controllers
 
         private readonly ITeacher _teacher;
         private readonly IAcademicGroup _group;
-        public TeacherController(ITeacher teacher, IAcademicGroup group)
+        private readonly IPosition _position;
+        public TeacherController(ITeacher teacher, IAcademicGroup group, IPosition position)
         {
             _teacher = teacher;
             _group = group;
+            _position = position;
         }
 
 
@@ -33,6 +35,7 @@ namespace Test.Controllers
                 var teacherViewModel = new TeacherViewModel
                 {
                     Id = teacher.Id,
+                    PositionId = teacher.PositionId,
                     Position = teacher.Position,
                     Name = teacher.Name,
                     PhoneNumber = teacher.PhoneNumber,
@@ -63,7 +66,25 @@ namespace Test.Controllers
         public IActionResult CreateTeacher()
         {
             ViewBag.Title = "Добавление преподавателя";
-            return View();
+
+            var teacherViewModel = new TeacherViewModel
+            {
+                Positions = new List<PositionViewModel>()
+            };
+            
+            var positions = _position.GetPositions;
+            foreach (var position in positions)
+            {
+
+                var positionViewModel = new PositionViewModel
+                {
+                    Id = position.Id,
+                    Name = position.Name
+                };
+                teacherViewModel.Positions.Add(positionViewModel);
+            }
+
+            return View(teacherViewModel);
         }
         [HttpPost]
         public IActionResult CreateTeacher(TeacherViewModel model)
@@ -75,17 +96,39 @@ namespace Test.Controllers
                     var newTeacher = new Teacher
                     {
                         Name = model.Name,
-                        Position = model.Position,
+                        PositionId = model.PositionId,
                         Img = model.Img,
                         PhoneNumber = model.PhoneNumber
                     };
+
                     var teacher = _teacher.CreateTeacherPost(newTeacher, model.Photo);
                     return RedirectToAction("DetailsTeacher", "Teacher", new { id = teacher.Id });
                 }
                 return NotFound();
             }
-            ViewBag.Title = "Добавление преподавателя";
-            return View();
+            else
+            {
+                ViewBag.Title = "Добавление преподавателя";
+
+                var teacherViewModel = new TeacherViewModel
+                {
+                    Positions = new List<PositionViewModel>()
+                };
+
+                var positions = _position.GetPositions;
+                foreach (var position in positions)
+                {
+
+                    var positionViewModel = new PositionViewModel
+                    {
+                        Id = position.Id,
+                        Name = position.Name
+                    };
+                    teacherViewModel.Positions.Add(positionViewModel);
+                }
+
+                return View(teacherViewModel);
+            }
         }
 
 
@@ -129,10 +172,23 @@ namespace Test.Controllers
                 {
                     Id = teacher.Id,
                     Name = teacher.Name,
+                    PositionId = teacher.PositionId,
+                    Positions = new List<PositionViewModel>(),
                     Position = teacher.Position,
                     PhoneNumber = teacher.PhoneNumber,
                     Img = teacher.Img
                 };
+                var positions = _position.GetPositions;
+                foreach (var position in positions)
+                {
+
+                    var positionViewModel = new PositionViewModel
+                    {
+                        Id = position.Id,
+                        Name = position.Name
+                    };
+                    teacherViewModel.Positions.Add(positionViewModel);
+                }
                 return View(teacherViewModel);
             }
             return NotFound();
@@ -148,6 +204,7 @@ namespace Test.Controllers
                     {
                         Id = model.Id,
                         Name = model.Name,
+                        PositionId = model.PositionId,
                         Position = model.Position,
                         PhoneNumber = model.PhoneNumber,
                         Img = model.Img
@@ -165,10 +222,23 @@ namespace Test.Controllers
                 {
                     Id = teacher.Id,
                     Name = teacher.Name,
+                    PositionId = teacher.PositionId,
+                    Positions = new List<PositionViewModel>(),
                     Position = teacher.Position,
                     PhoneNumber = teacher.PhoneNumber,
                     Img = teacher.Img
                 };
+                var positions = _position.GetPositions;
+                foreach (var position in positions)
+                {
+
+                    var positionViewModel = new PositionViewModel
+                    {
+                        Id = position.Id,
+                        Name = position.Name
+                    };
+                    teacherViewModel.Positions.Add(positionViewModel);
+                }
                 return View(teacherViewModel);
             }
         }

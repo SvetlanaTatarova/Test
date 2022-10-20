@@ -26,6 +26,7 @@ namespace Test
                     var context = services.GetRequiredService<ApplicationContext>();
                     CourseData.Initialize(context);
                     SpecialityData.Initialize(context);
+                    PositionData.Initialize(context);
                     TeacherData.Initialize(context);
                     GroupData.Initialize(context);
                     StudentData.Initialize(context);

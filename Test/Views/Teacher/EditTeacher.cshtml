@@ -26,7 +26,8 @@
 
             <div class="form-group">
                 <label asp-for="Position" class="control-label">Должность преподавателя</label>
-                <select asp-for="Position" class="form-control" asp-items="Html.GetEnumSelectList<Position>()"></select>
+                <select asp-for="PositionId" asp-items="@Model.Positions.Select(_=> new SelectListItem { Value = _.Id.ToString(), Text =_.Name})" class="control-label">
+                </select>
             </div>
 
             <div class="form-group">

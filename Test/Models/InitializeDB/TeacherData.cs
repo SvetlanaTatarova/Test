@@ -16,160 +16,140 @@ namespace Test.Models.InitializeDB
                      new Teacher
                      {
                          Name = "Иванов Иван Иванович",
-                         //Position = "Преподаватель",
-                         Position = Position.Преподаватель,
-                         PhoneNumber = "0(775)00001",
+                         PositionId = 2,
+                         PhoneNumber = "0(775)00001",                        
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Иванова Ирина Ильинична",
-                         //Position = "Старший преподаватель",
-                         Position = Position.Старший_преподаватель,
+                         PositionId = 3,
                          PhoneNumber = "0(775)00002",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Иванова Галина Ивановна",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00003",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Андреев Иван Иванович",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00004",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Андреева Ирина Семёновна",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00005",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Петров Сергей Михайлович",
-                         //Position = "Старший преподаватель",
-                         Position = Position.Старший_преподаватель,
+                         PositionId = 3,
                          PhoneNumber = "0(775)00006",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Петрова Маргарита Алексеевна",
-                         //Position = "Преподаватель",
-                         Position = Position.Преподаватель,
+                         PositionId = 4,
                          PhoneNumber = "0(775)00007",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Васильев Иван Николаевич",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00008",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Васильева Анастасия Викторовна",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00009",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Николаев Дмитрий Сергеевич",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00010",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Николаев Олег Михайлович",
-                         //Position = "Старший преподаватель",
-                         Position = Position.Старший_преподаватель,
+                         PositionId = 3,
                          PhoneNumber = "0(775)00011",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Николаева Олеся Владимировна",
-                         //Position = "Преподаватель",
-                         Position = Position.Преподаватель,
+                         PositionId = 4,
                          PhoneNumber = "0(775)00012",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Николаев Евгений Дмитриевич",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00013",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Руденко Матрена Ивановна",
-                         //Position = "Профессор",
-                         Position = Position.Профессор,
+                         PositionId = 1,
                          PhoneNumber = "0(775)00014",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Степанова Людмила Семёновна",
-                         //Position = "Старший преподаватель",
-                         Position = Position.Старший_преподаватель,
+                         PositionId = 3,
                          PhoneNumber = "0(775)00015",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Степанов Максим Фёдорович",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00016",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Степанова Оксана Николаевна",
-                         //Position = "Преподаватель",
-                         Position = Position.Преподаватель,
+                         PositionId = 4,
                          PhoneNumber = "0(775)00017",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Яцко Иван Алексеевич",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00018",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Гущина Юлия Алексеевна",
-                         //Position = "Доцент",
-                         Position = Position.Доцент,
+                         PositionId = 2,
                          PhoneNumber = "0(775)00019",
                          Img = null
                      },
                      new Teacher
                      {
                          Name = "Задорнов Михаил Николаевич",
-                         //Position = "Профессор",
-                         Position = Position.Профессор,
+                         PositionId = 1,
                          PhoneNumber = "0(775)00020",
                          Img = null
                      }

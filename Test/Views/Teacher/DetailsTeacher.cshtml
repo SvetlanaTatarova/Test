@@ -15,7 +15,7 @@
 <div class="col-9 mt-3" style="float: right">
     <p style="font-size:25px"><strong>@Model.Name</strong></p>
 
-    <p style="font-size:22px">Должность: @Model.Position</p>
+    <p style="font-size:22px">Должность: @Model.Position.Name</p>
 
     @if (Model.PhoneNumber != null)
     {<p style="font-size:22px">Номер телефона: @Model.PhoneNumber</p>}
