@@ -10,7 +10,7 @@ using Test.Models.InitializeDB;
 namespace Test.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20231012084024_InitialCreate")]
+    [Migration("20231012122749_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
